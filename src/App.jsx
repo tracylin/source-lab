@@ -203,17 +203,9 @@ export default function App() {
   const [pos, setPos] = useState("");
   const [iframeErr, setIframeErr] = useState({});
   const [expandedNote, setExpandedNote] = useState(null);
-  const [linkMode, setLinkMode] = useState(null);
   const [linkOpened, setLinkOpened] = useState(false);
-  const [splitIframeErr, setSplitIframeErr] = useState(false);
-  const [winWidth, setWinWidth] = useState(typeof window !== "undefined" ? window.innerWidth : 900);
 
   useEffect(() => { const d = load(); setS(d); setPos(d.position || ""); }, []);
-  useEffect(() => {
-    const h = () => setWinWidth(window.innerWidth);
-    window.addEventListener("resize", h);
-    return () => window.removeEventListener("resize", h);
-  }, []);
   useEffect(() => { if (s) save(s); }, [s]);
   useEffect(() => {
     document.body.classList.toggle("dark", dark);
@@ -241,8 +233,7 @@ export default function App() {
   }
   function delNote(id) { setS(p => ({ ...p, notes: p.notes.filter(n => n.id !== id) })); }
   function savePos() { setS(p => ({ ...p, position: pos })); }
-  function resetLinkState() { setLinkMode(null); setLinkOpened(false); setSplitIframeErr(false); }
-  function goRead(t) { setThinker(t); setPiece(t.pieces[0]); setNote(""); setIframeErr({}); setExpandedNote(null); resetLinkState(); setView("read"); }
+  function goRead(t) { setThinker(t); setPiece(t.pieces[0]); setNote(""); setIframeErr({}); setExpandedNote(null); setLinkOpened(false); setView("read"); }
 
   const meta = { fontSize: 11, letterSpacing: "0.08em", color: fg2 };
   const title = { fontFamily: "'Space Grotesk', 'Helvetica Neue', sans-serif", fontWeight: 700, letterSpacing: "-0.01em", textTransform: "uppercase" };
@@ -280,86 +271,6 @@ export default function App() {
               {dark ? "☀" : "●"}
             </button>
           </div>
-        </div>
-      </div>
-    );
-  }
-
-  const isMobile = winWidth < 600;
-
-  function openExternal(url) {
-    window.open(url, "_blank", "noopener,noreferrer");
-    setLinkOpened(true);
-    setLinkMode("floating");
-  }
-
-  // ── FLOATING NOTES PANEL ──
-  function FloatingNotesPanel() {
-    const pieceNotes = s.notes.filter(n => n.tid === thinker.id && n.pid === piece.id);
-    const panelW = isMobile ? "calc(100% - 24px)" : 340;
-    return (
-      <div style={{
-        position: "fixed",
-        bottom: isMobile ? 0 : "calc(70px + env(safe-area-inset-bottom))",
-        right: isMobile ? 12 : 20,
-        left: isMobile ? 12 : "auto",
-        width: isMobile ? undefined : panelW,
-        maxHeight: isMobile ? "50vh" : 420,
-        zIndex: 150,
-        border: `2px solid ${border}`,
-        background: bg,
-        display: "flex", flexDirection: "column",
-        boxShadow: dark ? "0 4px 24px rgba(0,0,0,0.5)" : "0 4px 24px rgba(0,0,0,0.18)",
-        transition: "opacity 0.2s, transform 0.2s",
-        paddingBottom: isMobile ? "env(safe-area-inset-bottom)" : 0,
-      }}>
-        {/* Title bar */}
-        <div style={{
-          display: "flex", justifyContent: "space-between", alignItems: "center",
-          padding: "8px 12px", borderBottom: `1px solid ${border}`,
-          background: dark ? "#1a1a1a" : "#f5f5f5",
-        }}>
-          <div style={{ ...meta, fontSize: 10, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: 1 }}>
-            {piece.title}
-          </div>
-          <div style={{ display: "flex", gap: 8, marginLeft: 8, flexShrink: 0 }}>
-            <button style={{ ...linkBtn, fontSize: 10 }} onClick={() => setLinkMode("split")}>EXPAND</button>
-            <button style={{ ...linkBtn, fontSize: 10 }} onClick={() => { setLinkMode(null); }}>✕</button>
-          </div>
-        </div>
-
-        {/* Notes area */}
-        <div style={{ padding: 12, flex: 1, overflowY: "auto" }}>
-          <textarea value={note} onChange={e => setNote(e.target.value)}
-            placeholder="Jot ideas while reading..."
-            style={{
-              width: "100%", minHeight: 80, border: `1px solid ${border}`,
-              padding: 10, fontSize: 13, fontFamily: "'Source Serif 4', Georgia, serif",
-              lineHeight: 1.5, resize: "vertical", outline: "none",
-              boxSizing: "border-box", background: inputBg, color: fg,
-              marginBottom: 8,
-            }}
-          />
-          <button
-            style={note.trim() ? { ...solidBtn, fontSize: 11, padding: "8px 16px" } : { ...solidBtn, fontSize: 11, padding: "8px 16px", opacity: 0.3, cursor: "default" }}
-            onClick={addNote} disabled={!note.trim()}
-          >
-            SAVE NOTE
-          </button>
-
-          {pieceNotes.length > 0 && (
-            <div style={{ marginTop: 14, borderTop: `1px solid ${borderLight}`, paddingTop: 10 }}>
-              <div style={{ ...meta, fontSize: 9, marginBottom: 6 }}>RECENT NOTES:</div>
-              {pieceNotes.slice(-3).reverse().map(n => (
-                <div key={n.id} style={{ borderBottom: `1px solid ${borderLight}`, paddingBottom: 6, marginBottom: 6 }}>
-                  <div style={{ ...meta, fontSize: 9, marginBottom: 2 }}>{fmtDate(new Date(n.date))}</div>
-                  <div style={{ ...bodyText, fontSize: 12, lineHeight: 1.4 }}>
-                    {n.text.length > 100 ? n.text.slice(0, 100) + "…" : n.text}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
         </div>
       </div>
     );
@@ -484,7 +395,7 @@ export default function App() {
           {thinker.pieces.map((p, i) => {
             const active = p.id === piece.id;
             return (
-              <button key={p.id} onClick={() => { setPiece(p); setNote(""); setExpandedNote(null); resetLinkState(); }} style={{
+              <button key={p.id} onClick={() => { setPiece(p); setNote(""); setExpandedNote(null); setLinkOpened(false); }} style={{
                 fontFamily: "'Space Mono', monospace", fontSize: 11, letterSpacing: "0.05em",
                 padding: "10px 16px", border: "none",
                 background: active ? fg : "transparent",
@@ -498,94 +409,8 @@ export default function App() {
           })}
         </div>
 
-        {/* SPLIT VIEW for link pieces */}
-        {linkMode === "split" && piece.type === "link" && (
-          <div style={{ paddingTop: 20 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-              <button style={outlineBtn} onClick={() => setLinkMode("floating")}>← COMPACT</button>
-              <button
-                style={isRead(piece.id) ? { ...outlineBtn, opacity: 0.5 } : solidBtn}
-                onClick={() => markRead(piece.id)}
-              >
-                {isRead(piece.id) ? "✓ READ" : "MARK READ"}
-              </button>
-            </div>
-            <div style={{ display: "flex", gap: 24, flexDirection: isMobile ? "column" : "row", minHeight: 500 }}>
-              {/* Left: iframe attempt */}
-              <div style={{ flex: "1.2 1 360px", minWidth: 0, display: "flex", flexDirection: "column" }}>
-                {!splitIframeErr ? (
-                  <div style={{ border: `1px solid ${border}`, flex: 1, position: "relative", minHeight: isMobile ? 300 : 0 }}>
-                    <iframe
-                      src={piece.url}
-                      style={{ width: "100%", height: "100%", border: "none", position: "absolute", top: 0, left: 0 }}
-                      title={piece.title}
-                      sandbox="allow-same-origin allow-scripts allow-popups"
-                      onError={() => setSplitIframeErr(true)}
-                    />
-                  </div>
-                ) : (
-                  <div style={{ border: `1px solid ${border}`, flex: 1, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", padding: 28 }}>
-                    <div style={{ ...meta, marginBottom: 12 }}>CONTENT OPEN IN OTHER TAB</div>
-                    <button style={outlineBtn} onClick={() => openExternal(piece.url)}>RE-OPEN ↗</button>
-                  </div>
-                )}
-                <div style={{ ...meta, fontSize: 10, marginTop: 8, textAlign: "center" }}>
-                  CAN'T SEE CONTENT?{" "}
-                  <button style={{ ...linkBtn, fontSize: 10, color: fg2 }} onClick={() => openExternal(piece.url)}>
-                    IT'S IN YOUR OTHER TAB ↗
-                  </button>
-                </div>
-              </div>
-
-              {/* Right: notes editor */}
-              <div style={{ flex: "1 1 280px", minWidth: 200, display: "flex", flexDirection: "column" }}>
-                <div style={{ borderTop: `3px solid ${border}`, paddingTop: 14, flex: 1, display: "flex", flexDirection: "column" }}>
-                  <div style={{ ...meta, fontSize: 10, marginBottom: 6 }}>{piece.format} · {piece.time}</div>
-                  <div style={{ ...title, fontSize: 18, color: fg, marginBottom: 12 }}>{piece.title}</div>
-
-                  <textarea value={note} onChange={e => setNote(e.target.value)}
-                    placeholder="Jot ideas while reading..."
-                    style={{
-                      width: "100%", flex: 1, minHeight: 160, border: `1px solid ${border}`,
-                      padding: 12, fontSize: 14, fontFamily: "'Source Serif 4', Georgia, serif",
-                      lineHeight: 1.6, resize: "vertical", outline: "none",
-                      boxSizing: "border-box", background: inputBg, color: fg,
-                      marginBottom: 10,
-                    }}
-                  />
-                  <button
-                    style={note.trim() ? solidBtn : { ...solidBtn, opacity: 0.3, cursor: "default" }}
-                    onClick={addNote} disabled={!note.trim()}
-                  >
-                    SAVE NOTE
-                  </button>
-
-                  {pNotes.length > 0 && (
-                    <div style={{ marginTop: 20, borderTop: `1px solid ${border}`, paddingTop: 12, overflowY: "auto", maxHeight: 200 }}>
-                      <div style={{ ...meta, fontSize: 10, marginBottom: 8 }}>ON {thinker.name}:</div>
-                      {pNotes.slice(-5).reverse().map(n => {
-                        const pc = thinker.pieces.find(p => p.id === n.pid);
-                        return (
-                          <div key={n.id} style={{ borderBottom: `1px solid ${borderLight}`, paddingBottom: 8, marginBottom: 8 }}>
-                            <div style={{ ...meta, fontSize: 10, marginBottom: 3 }}>
-                              {fmtDate(new Date(n.date))}{pc ? ` · ${pc.format}` : ""}
-                            </div>
-                            <div style={{ ...bodyText, fontSize: 13 }}>
-                              {n.text.length > 120 ? n.text.slice(0, 120) + "…" : n.text}
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Two-column layout (hidden in split mode) */}
-        {linkMode !== "split" && <div style={{ display: "flex", gap: 32, alignItems: "flex-start", flexWrap: "wrap", paddingTop: 20 }}>
+        {/* Two-column layout */}
+        <div style={{ display: "flex", gap: 32, alignItems: "flex-start", flexWrap: "wrap", paddingTop: 20 }}>
           {/* Content column */}
           <div style={{ flex: "2 1 420px", minWidth: 0 }}>
             {/* Meta */}
@@ -652,20 +477,19 @@ export default function App() {
                 {linkOpened && piece.type === "link" ? (
                   <div>
                     <div style={{ ...meta, fontSize: 11, marginBottom: 10 }}>READING EXTERNALLY</div>
-                    <button style={outlineBtn} onClick={() => openExternal(piece.url || piece.fallbackUrl)}>
+                    <a href={piece.url || piece.fallbackUrl} target="_blank" rel="noopener noreferrer" style={outlineBtn}>
                       RE-OPEN ↗
-                    </button>
+                    </a>
                   </div>
                 ) : (
-                  <button style={solidBtn} onClick={() => {
-                    if (piece.type === "link") {
-                      openExternal(piece.url);
-                    } else {
-                      window.open(piece.fallbackUrl, "_blank", "noopener,noreferrer");
-                    }
-                  }}>
+                  <a
+                    href={piece.type === "link" ? piece.url : piece.fallbackUrl}
+                    target="_blank" rel="noopener noreferrer"
+                    style={solidBtn}
+                    onClick={() => { if (piece.type === "link") setLinkOpened(true); }}
+                  >
                     OPEN →
-                  </button>
+                  </a>
                 )}
 
                 {piece.altLinks && (
@@ -686,7 +510,7 @@ export default function App() {
               display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 10,
             }}>
               <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-                {prev && <button style={outlineBtn} onClick={() => { setPiece(prev); setNote(""); setExpandedNote(null); resetLinkState(); }}>← PREV</button>}
+                {prev && <button style={outlineBtn} onClick={() => { setPiece(prev); setNote(""); setExpandedNote(null); setLinkOpened(false); }}>← PREV</button>}
                 <button
                   style={isRead(piece.id) ? { ...outlineBtn, opacity: 0.5 } : solidBtn}
                   onClick={() => markRead(piece.id)}
@@ -694,12 +518,12 @@ export default function App() {
                   {isRead(piece.id) ? "✓ READ" : "MARK READ"}
                 </button>
               </div>
-              {next && <button style={outlineBtn} onClick={() => { setPiece(next); setNote(""); setExpandedNote(null); resetLinkState(); }}>NEXT →</button>}
+              {next && <button style={outlineBtn} onClick={() => { setPiece(next); setNote(""); setExpandedNote(null); setLinkOpened(false); }}>NEXT →</button>}
             </div>
           </div>
 
-          {/* Notes sidebar (hidden when floating panel is active for link pieces) */}
-          <div style={{ flex: "1 1 240px", minWidth: 200, display: (linkMode === "floating" && piece.type === "link") ? "none" : "block" }}>
+          {/* Notes sidebar */}
+          <div style={{ flex: "1 1 240px", minWidth: 200 }}>
             <div style={{ borderTop: `3px solid ${border}`, paddingTop: 14 }}>
               <div style={{ ...meta, fontSize: 10, marginBottom: 10 }}>NOTES</div>
               <textarea value={note} onChange={e => setNote(e.target.value)}
@@ -745,10 +569,7 @@ export default function App() {
               )}
             </div>
           </div>
-        </div>}
-
-        {/* Floating notes panel */}
-        {linkMode === "floating" && piece.type === "link" && <FloatingNotesPanel />}
+        </div>
 
         <BottomBar />
       </div>
