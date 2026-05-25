@@ -1,44 +1,42 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 const THINKERS = [
   {
     id: "wang",
-    name: "Xiaowei Wang",
+    name: "XIAOWEI WANG",
     nameCn: "王小伟",
     tagline: "Tech entanglement, rural China, diaspora",
-    tag: "writing",
-    tagColor: "#712B13",
-    tagBg: "#FAECE7",
+    tag: "WRITING",
     pieces: [
       {
         id: "wang-slate",
-        title: "Made in China",
+        title: "MADE IN CHINA",
         subtitle: "Blockchain Chicken Farm excerpt",
-        format: "essay",
+        format: "ESSAY",
         source: "Slate",
-        time: "12 min read",
-        curatorNote: "Wang opens with a toy bird marked 'Made in China' found on a windowsill in California. Watch how the personal and systemic keep collapsing into each other \u2014 a family import-export business becomes a lens on global manufacturing, shame, innovation, and who gets to define value. That collapse is the move you might learn from.",
+        time: "12 MIN READ",
+        curatorNote: "Wang opens with a toy bird marked 'Made in China' found on a windowsill in California. Watch how the personal and systemic keep collapsing into each other — a family import-export business becomes a lens on global manufacturing, shame, innovation, and who gets to define value. That collapse is the move you might learn from.",
         type: "iframe",
         iframeUrl: "https://slate.com/technology/2020/10/innovation-immitation-made-in-china-xiaowei-wang.html",
         fallbackUrl: "https://slate.com/technology/2020/10/innovation-immitation-made-in-china-xiaowei-wang.html",
       },
       {
         id: "wang-ted",
-        title: "Why entrepreneurship flourishes in the countryside",
+        title: "WHY ENTREPRENEURSHIP FLOURISHES IN THE COUNTRYSIDE",
         subtitle: "TED Talk",
-        format: "video",
-        time: "14 min",
-        curatorNote: "Wang argues that the most careful, thoughtful innovation happens in rural communities \u2014 not Silicon Valley. Listen for how they dissolve the urban/rural binary. Think about how your own practice sits between LA and the Chinese countryside where bamboo originates.",
+        format: "VIDEO",
+        time: "14 MIN",
+        curatorNote: "Wang argues that the most careful, thoughtful innovation happens in rural communities — not Silicon Valley. Listen for how they dissolve the urban/rural binary. Think about how your own practice sits between LA and the Chinese countryside where bamboo originates.",
         type: "youtube",
         youtubeId: "jsFAFsx9otw",
       },
       {
         id: "wang-podcast",
-        title: "What Rural China Teaches Us About the Future of Tech",
-        subtitle: "Tech Won\u2019t Save Us podcast with Paris Marx",
-        format: "podcast",
-        time: "45 min",
-        curatorNote: "A longer conversation where Wang gets into supply chains specifically \u2014 how technology connects rural producers to global markets, but doesn\u2019t distribute power equally. The concept of \u2018technocracy\u2019 they introduce is sharp. Think about who holds technical knowledge in your own material chains.",
+        title: "WHAT RURAL CHINA TEACHES US ABOUT THE FUTURE OF TECH",
+        subtitle: "Tech Won't Save Us · Paris Marx",
+        format: "PODCAST",
+        time: "45 MIN",
+        curatorNote: "A longer conversation where Wang gets into supply chains specifically — how technology connects rural producers to global markets, but doesn't distribute power equally. The concept of 'technocracy' they introduce is sharp. Think about who holds technical knowledge in your own material chains.",
         type: "link",
         url: "https://podcasts.apple.com/podcast/what-rural-china-teaches-us-about-future-tech-w-xiaowei/id1507621076?i=1000495651660",
       },
@@ -46,30 +44,28 @@ const THINKERS = [
   },
   {
     id: "steyerl",
-    name: "Hito Steyerl",
+    name: "HITO STEYERL",
     tagline: "Image circulation, digital labor, objects in systems",
-    tag: "art + text",
-    tagColor: "#085041",
-    tagBg: "#E1F5EE",
+    tag: "ART + TEXT",
     pieces: [
       {
         id: "steyerl-poor",
-        title: "In Defense of the Poor Image",
+        title: "IN DEFENSE OF THE POOR IMAGE",
         subtitle: "e-flux journal #10, 2009",
-        format: "essay",
-        time: "20 min read",
-        curatorNote: "Steyerl argues images are not representations but things that circulate \u2014 they get compressed, degraded, weaponized as they move through systems. The \u2018poor image\u2019 is a logistics story. Think about your lanterns: objects that resist this kind of circulation. What does it mean to make something that can\u2019t become a poor image?",
+        format: "ESSAY",
+        time: "20 MIN READ",
+        curatorNote: "Steyerl argues images are not representations but things that circulate — they get compressed, degraded, weaponized as they move through systems. The 'poor image' is a logistics story. Think about your lanterns: objects that resist this kind of circulation. What does it mean to make something that can't become a poor image?",
         type: "iframe",
         iframeUrl: "https://www.e-flux.com/journal/10/61362/in-defense-of-the-poor-image/",
         fallbackUrl: "https://www.e-flux.com/journal/10/61362/in-defense-of-the-poor-image/",
       },
       {
         id: "steyerl-freeport",
-        title: "Duty Free Art (on Freeports)",
-        subtitle: "Book chapter \u2014 Duty Free Art, 2017",
-        format: "book",
-        time: "25 min read",
-        curatorNote: "Freeports are literal supply chain art spaces \u2014 tax-free storage facilities where art exists in permanent transit, never arriving, never being seen. Steyerl asks: what kind of art is made for a world of permanent circulation? The JD museum is almost the inverse \u2014 a logistics company building a place for art to land.",
+        title: "DUTY FREE ART (ON FREEPORTS)",
+        subtitle: "Book chapter — Duty Free Art, 2017",
+        format: "BOOK",
+        time: "25 MIN READ",
+        curatorNote: "Freeports are literal supply chain art spaces — tax-free storage facilities where art exists in permanent transit, never arriving, never being seen. Steyerl asks: what kind of art is made for a world of permanent circulation? The JD museum is almost the inverse — a logistics company building a place for art to land.",
         type: "link",
         url: "https://www.versobooks.com/products/58-duty-free-art",
         altLinks: [
@@ -81,19 +77,17 @@ const THINKERS = [
   },
   {
     id: "tsing",
-    name: "Anna Tsing",
+    name: "ANNA TSING",
     tagline: "Following materials through patchy supply chains",
-    tag: "theory",
-    tagColor: "#3C3489",
-    tagBg: "#EEEDFE",
+    tag: "THEORY",
     pieces: [
       {
         id: "tsing-mushroom",
-        title: "The Mushroom at the End of the World",
-        subtitle: "Chapters 1\u20133: Arts of Noticing",
-        format: "book",
-        time: "35 min read",
-        curatorNote: "Tsing\u2019s method: follow a single organism (matsutake mushroom) through every hand it passes and discover that each person in the chain lives in a different economy. That\u2019s \u2018patchiness\u2019 \u2014 supply chains aren\u2019t smooth, they\u2019re stitched together from incommensurable worlds. Could you do this with bamboo?",
+        title: "THE MUSHROOM AT THE END OF THE WORLD",
+        subtitle: "Chapters 1–3: Arts of Noticing",
+        format: "BOOK",
+        time: "35 MIN READ",
+        curatorNote: "Tsing's method: follow a single organism (matsutake mushroom) through every hand it passes and discover that each person in the chain lives in a different economy. That's 'patchiness' — supply chains aren't smooth, they're stitched together from incommensurable worlds. Could you do this with bamboo?",
         type: "link",
         url: "https://press.princeton.edu/books/paperback/9780691178325/the-mushroom-at-the-end-of-the-world",
         altLinks: [
@@ -103,11 +97,11 @@ const THINKERS = [
       },
       {
         id: "tsing-talk",
-        title: "Feral Atlas: Book Talk with Anna Tsing",
-        subtitle: "Lecture \u2014 2022",
-        format: "video",
-        time: "50 min",
-        curatorNote: "Tsing extends her supply chain thinking to ecological damage \u2014 how human infrastructure creates \u2018feral\u2019 effects that escape control. Listen for the word \u2018entanglement\u2019 \u2014 she means it literally. Every infrastructure produces unintended ecologies.",
+        title: "FERAL ATLAS: BOOK TALK",
+        subtitle: "Lecture — 2022",
+        format: "VIDEO",
+        time: "50 MIN",
+        curatorNote: "Tsing extends her supply chain thinking to ecological damage — how human infrastructure creates 'feral' effects that escape control. Listen for the word 'entanglement' — she means it literally. Every infrastructure produces unintended ecologies.",
         type: "youtube",
         youtubeId: "UyI5dbx2G2o",
       },
@@ -115,29 +109,27 @@ const THINKERS = [
   },
   {
     id: "easterling",
-    name: "Keller Easterling",
+    name: "KELLER EASTERLING",
     tagline: "Infrastructure space, zones, spatial software",
-    tag: "theory",
-    tagColor: "#3C3489",
-    tagBg: "#EEEDFE",
+    tag: "THEORY",
     pieces: [
       {
         id: "easterling-lecture",
-        title: "Medium Design",
-        subtitle: "Lecture at Strelka Institute, 2017",
-        format: "video",
-        time: "45 min",
-        curatorNote: "Easterling\u2019s core move: the most powerful design isn\u2019t objects, it\u2019s protocols \u2014 the rules that govern how things combine. Infrastructure has a \u2018disposition,\u2019 it actively shapes behavior without being visible. Think about Shenzhen, where the JD museum sits, as one of her \u2018zones.\u2019 The museum itself is infrastructure.",
+        title: "MEDIUM DESIGN",
+        subtitle: "Strelka Institute, 2017",
+        format: "VIDEO",
+        time: "45 MIN",
+        curatorNote: "Easterling's core move: the most powerful design isn't objects, it's protocols — the rules that govern how things combine. Infrastructure has a 'disposition,' it actively shapes behavior without being visible. Think about Shenzhen, where the JD museum sits, as one of her 'zones.'",
         type: "youtube",
         youtubeId: "x7RhIK9OIAE",
       },
       {
         id: "easterling-convo",
-        title: "In Conversation with Keller Easterling",
-        subtitle: "2025 \u2014 on Medium Design book",
-        format: "video",
-        time: "40 min",
-        curatorNote: "A more recent and accessible conversation. Easterling says \u2018solutions are mistakes\u2019 \u2014 meaning the interesting design space is in relationships, not fixes. How does this apply to supply chain art? Maybe the point isn\u2019t to critique the system but to work within its entanglements.",
+        title: "IN CONVERSATION",
+        subtitle: "2025 — on Medium Design",
+        format: "VIDEO",
+        time: "40 MIN",
+        curatorNote: "Easterling says 'solutions are mistakes' — the interesting design space is in relationships, not fixes. How does this apply to supply chain art? Maybe the point isn't to critique the system but to work within its entanglements.",
         type: "youtube",
         youtubeId: "G0DNyuWvmjU",
       },
@@ -145,54 +137,48 @@ const THINKERS = [
   },
   {
     id: "nguyen",
-    name: "Mimi Thi Nguyen",
-    nameCn: "\u962E",
+    name: "MIMI THI NGUYEN",
+    nameCn: "阮",
     tagline: "Gift economies, refugee logistics, diaspora debt",
-    tag: "theory",
-    tagColor: "#3C3489",
-    tagBg: "#EEEDFE",
+    tag: "THEORY",
     pieces: [
       {
         id: "nguyen-gift",
-        title: "The Gift of Freedom: Introduction",
+        title: "THE GIFT OF FREEDOM: INTRODUCTION",
         subtitle: "Duke University Press, 2012",
-        format: "book",
-        time: "30 min read",
-        curatorNote: "Nguyen argues that humanitarian aid is itself a supply chain \u2014 with its own logistics of debt and gratitude. The \u2018gift of freedom\u2019 is not free; it creates permanent indebtedness. Think about informal supply chains of care in diaspora communities. Your lantern practice exists within these too: knowledge passed through WeChat, materials sourced through personal networks.",
+        format: "BOOK",
+        time: "30 MIN READ",
+        curatorNote: "Nguyen argues that humanitarian aid is itself a supply chain — with its own logistics of debt and gratitude. The 'gift of freedom' is not free; it creates permanent indebtedness. Think about informal supply chains of care in diaspora communities. Your lantern practice exists within these too.",
         type: "link",
         url: "https://read.dukeupress.edu/books/book/1364/The-Gift-of-FreedomWar-Debt-and-Other-Refugee",
-        altLinks: [
-          { label: "Buy", url: "https://www.dukeupress.edu/the-gift-of-freedom" },
-        ],
+        altLinks: [{ label: "Buy", url: "https://www.dukeupress.edu/the-gift-of-freedom" }],
       },
     ],
   },
   {
     id: "sekula",
-    name: "Allan Sekula",
+    name: "ALLAN SEKULA",
     tagline: "Maritime labor, container shipping, the hidden sea",
-    tag: "art + text",
-    tagColor: "#085041",
-    tagBg: "#E1F5EE",
+    tag: "ART + TEXT",
     pieces: [
       {
         id: "sekula-walker",
-        title: "Fish Story \u2014 Exhibition Overview",
-        subtitle: "Walker Art Center documentation",
-        format: "essay",
-        time: "10 min read",
-        curatorNote: "Start here for the visual argument. Sekula spent seven years documenting harbors and port cities. His key claim: the ocean isn\u2019t nature, it\u2019s one of the most industrialized spaces on earth. We aestheticize the sea to forget the labor that moves 90% of global goods. Where he works at the macro scale of container ships, you work at the micro scale of a single bamboo.",
+        title: "FISH STORY",
+        subtitle: "Walker Art Center",
+        format: "ESSAY",
+        time: "10 MIN READ",
+        curatorNote: "Start here for the visual argument. Sekula spent seven years documenting harbors and port cities. His key claim: the ocean isn't nature, it's one of the most industrialized spaces on earth. Where he works at the macro scale of container ships, you work at the micro scale of a single bamboo.",
         type: "iframe",
         iframeUrl: "https://www.walkerart.org/whats-on/allan-sekula-fish-story/",
         fallbackUrl: "https://www.walkerart.org/whats-on/allan-sekula-fish-story/",
       },
       {
         id: "sekula-forgotten",
-        title: "The Forgotten Space \u2014 trailer",
-        subtitle: "Documentary film with No\u00ebl Burch, 2010",
-        format: "video",
-        time: "5 min trailer",
-        curatorNote: "The documentary version of Fish Story. Even the trailer gives you the visual vocabulary: containers, ports, labor, the sea as industrial space. If you watch the first 30 minutes of the full film you\u2019ll have the core argument.",
+        title: "THE FORGOTTEN SPACE",
+        subtitle: "Documentary with Noël Burch, 2010",
+        format: "VIDEO",
+        time: "5 MIN TRAILER",
+        curatorNote: "The documentary version of Fish Story. Even the trailer gives you the visual vocabulary: containers, ports, labor, the sea as industrial space.",
         type: "youtube",
         youtubeId: "SMWGJ2GhBqk",
       },
@@ -200,259 +186,365 @@ const THINKERS = [
   },
 ];
 
-const SK = "scrl-v3";
-
-function getDefault() {
-  return { readPieces: [], notes: [], position: "" };
-}
-
-function load() {
-  try {
-    const raw = localStorage.getItem(SK);
-    if (raw) return JSON.parse(raw);
-  } catch (e) {}
-  return getDefault();
-}
-
-function save(s) {
-  try { localStorage.setItem(SK, JSON.stringify(s)); } catch (e) {}
-}
-
-function fmtDate(d) {
-  const m = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-  return `${m[d.getMonth()]} ${d.getDate()}`;
-}
+const SK = "scrl-v5";
+const DK = "scrl-dark";
+function getDefault() { return { readPieces: [], notes: [], position: "" }; }
+function load() { try { const r = localStorage.getItem(SK); if (r) return JSON.parse(r); } catch(e){} return getDefault(); }
+function save(s) { try { localStorage.setItem(SK, JSON.stringify(s)); } catch(e){} }
+function fmtDate(d) { return `${String(d.getMonth()+1).padStart(2,"0")}.${String(d.getDate()).padStart(2,"0")}.${d.getFullYear()}`; }
 
 export default function App() {
   const [s, setS] = useState(null);
+  const [dark, setDark] = useState(() => localStorage.getItem(DK) === "1");
   const [view, setView] = useState("home");
   const [thinker, setThinker] = useState(null);
   const [piece, setPiece] = useState(null);
   const [note, setNote] = useState("");
   const [pos, setPos] = useState("");
   const [iframeErr, setIframeErr] = useState({});
+  const [expandedNote, setExpandedNote] = useState(null);
 
-  useEffect(() => {
-    const d = load(); setS(d); setPos(d.position || "");
-  }, []);
-
+  useEffect(() => { const d = load(); setS(d); setPos(d.position || ""); }, []);
   useEffect(() => { if (s) save(s); }, [s]);
+  useEffect(() => {
+    document.body.classList.toggle("dark", dark);
+    localStorage.setItem(DK, dark ? "1" : "0");
+  }, [dark]);
 
-  if (!s) return <div style={{padding:"2rem",fontFamily:"Georgia,serif",color:"#aaa"}}>Loading\u2026</div>;
+  if (!s) return <div style={{ padding: "3rem", fontSize: 12, letterSpacing: "0.1em" }}>LOADING...</div>;
+
+  const fg = dark ? "#eee" : "#000";
+  const bg = dark ? "#111" : "#fff";
+  const fg2 = dark ? "#888" : "#666";
+  const border = dark ? "#444" : "#000";
+  const borderLight = dark ? "#333" : "#ddd";
+  const inputBg = dark ? "#1a1a1a" : "#fff";
 
   const isRead = id => s.readPieces.includes(id);
-  const prog = t => { const d = t.pieces.filter(p => isRead(p.id)).length; return t.pieces.length > 0 ? d / t.pieces.length : 0; };
+  const prog = t => { const d = t.pieces.filter(p => isRead(p.id)).length; return { done: d, total: t.pieces.length }; };
   const tNotes = id => s.notes.filter(n => n.tid === id);
-  const explored = THINKERS.filter(t => prog(t) > 0).length;
 
-  function markRead(id) { if (!isRead(id)) setS(p => ({...p, readPieces: [...p.readPieces, id]})); }
+  function markRead(id) { if (!isRead(id)) setS(p => ({ ...p, readPieces: [...p.readPieces, id] })); }
   function addNote() {
     if (!note.trim()) return;
-    setS(p => ({...p, notes: [...p.notes, { id: Date.now().toString(), tid: thinker.id, pid: piece.id, text: note.trim(), date: new Date().toISOString() }]}));
+    setS(p => ({ ...p, notes: [...p.notes, { id: Date.now().toString(), tid: thinker.id, pid: piece.id, text: note.trim(), date: new Date().toISOString() }] }));
     setNote("");
   }
-  function delNote(id) { setS(p => ({...p, notes: p.notes.filter(n => n.id !== id)})); }
-  function savePos() { setS(p => ({...p, position: pos})); }
+  function delNote(id) { setS(p => ({ ...p, notes: p.notes.filter(n => n.id !== id) })); }
+  function savePos() { setS(p => ({ ...p, position: pos })); }
+  function goRead(t) { setThinker(t); setPiece(t.pieces[0]); setNote(""); setIframeErr({}); setExpandedNote(null); setView("read"); }
 
-  function goRead(t) { setThinker(t); setPiece(t.pieces[0]); setNote(""); setIframeErr({}); setView("read"); }
-  function goPiece(p) { setPiece(p); setNote(""); }
+  const meta = { fontSize: 11, letterSpacing: "0.08em", color: fg2 };
+  const title = { fontFamily: "'Space Grotesk', 'Helvetica Neue', sans-serif", fontWeight: 700, letterSpacing: "-0.01em", textTransform: "uppercase" };
+  const bodyText = { fontFamily: "'Source Serif 4', Georgia, serif", fontSize: 14, lineHeight: 1.7, color: dark ? "#ccc" : "#333" };
 
-  const sf = "Georgia, 'Source Serif 4', serif";
-  const ss = "'DM Sans', 'Helvetica Neue', Helvetica, sans-serif";
+  const linkBtn = { fontSize: 12, letterSpacing: "0.06em", background: "transparent", border: "none", cursor: "pointer", padding: 0, color: fg, textTransform: "uppercase" };
+  const solidBtn = { fontSize: 12, letterSpacing: "0.06em", textTransform: "uppercase", background: fg, color: bg, border: "none", padding: "10px 20px", cursor: "pointer", fontFamily: "'Space Mono', monospace" };
+  const outlineBtn = { ...solidBtn, background: "transparent", color: fg, border: `1px solid ${border}` };
 
-  const tag = (bg, c) => ({ fontSize:10, padding:"2px 8px", borderRadius:4, background:bg, color:c, display:"inline-block" });
-  const btn = { border:"1px solid #d4d2cb", borderRadius:6, background:"transparent", padding:"6px 14px", fontSize:12, cursor:"pointer", color:"#666", fontFamily:ss };
-  const btnA = {...btn, border:"1px solid #0F6E56", background:"#E1F5EE", color:"#085041"};
+  const W = { maxWidth: 860, margin: "0 auto", padding: "0 1.25rem", paddingBottom: 80 };
 
-  // HOME
-  if (view === "home") return (
-    <div style={{maxWidth:800,margin:"0 auto",padding:"1.5rem 1rem",fontFamily:ss}}>
-      
-      <h1 style={{fontFamily:sf,fontSize:22,fontWeight:400,letterSpacing:"-0.02em",margin:0}}>Supply chain aesthetics</h1>
-      <div style={{fontSize:13,color:"#999",marginTop:4,marginBottom:"1.5rem"}}>Reading lab</div>
-      <div style={{display:"flex",gap:16,fontSize:12,color:"#aaa",padding:"8px 0",borderBottom:"1px solid #eae8e2",marginBottom:"1.25rem"}}>
-        <span>{s.notes.length} note{s.notes.length!==1?"s":""}</span>
-        <span>{explored}/{THINKERS.length} explored</span>
-        <span>{s.readPieces.length} piece{s.readPieces.length!==1?"s":""} read</span>
-      </div>
-      {THINKERS.map(t => {
-        const p = prog(t); const ex = p > 0;
-        return (
-          <div key={t.id} onClick={() => goRead(t)} style={{border:"1px solid #eae8e2",borderRadius:8,padding:"14px 16px",marginBottom:10,cursor:"pointer",opacity:ex?1:0.55,transition:"opacity 0.15s"}}>
-            <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
-              <div>
-                <div style={{fontSize:14,fontWeight:500}}>{t.name}{t.nameCn?` / ${t.nameCn}`:""}</div>
-                <div style={{fontSize:12,color:"#aaa",marginTop:2}}>{t.tagline}</div>
-              </div>
-              <span style={tag(t.tagBg,t.tagColor)}>{t.tag}</span>
-            </div>
-            <div style={{display:"flex",justifyContent:"space-between",fontSize:11,color:"#ccc",marginTop:6}}>
-              <span>{t.pieces.length} piece{t.pieces.length!==1?"s":""}</span>
-              {tNotes(t.id).length>0&&<span>{tNotes(t.id).length} note{tNotes(t.id).length!==1?"s":""}</span>}
-            </div>
-            <div style={{height:3,borderRadius:2,background:"#eae8e2",marginTop:8,overflow:"hidden"}}>
-              <div style={{height:"100%",width:`${Math.round(p*100)}%`,background:"#0F6E56",borderRadius:2,transition:"width 0.3s"}}/>
-            </div>
-          </div>
-        );
-      })}
-      <div style={{display:"flex",gap:8,marginTop:"1.5rem"}}>
-        <button style={btn} onClick={()=>setView("notebook")}>All notes</button>
-        <button style={btn} onClick={()=>setView("position")}>My position</button>
-      </div>
-    </div>
-  );
-
-  // NOTEBOOK
-  if (view === "notebook") {
-    const sorted = [...s.notes].sort((a,b) => new Date(b.date)-new Date(a.date));
+  // ── BOTTOM BAR ──
+  function BottomBar() {
     return (
-      <div style={{maxWidth:800,margin:"0 auto",padding:"1.5rem 1rem",fontFamily:ss}}>
-        
-        <div style={{cursor:"pointer",fontSize:13,color:"#aaa",marginBottom:"1.5rem"}} onClick={()=>setView("home")}>&larr; Home</div>
-        <h2 style={{fontFamily:sf,fontSize:18,fontWeight:400,margin:"0 0 1rem"}}>Notebook</h2>
-        {sorted.length===0&&<div style={{fontSize:13,color:"#aaa"}}>No notes yet. Start reading and jot down ideas as you go.</div>}
-        {sorted.map(n => {
-          const th = THINKERS.find(t=>t.id===n.tid);
-          const pc = th?.pieces.find(p=>p.id===n.pid);
-          return (
-            <div key={n.id} style={{borderBottom:"1px solid #eae8e2",padding:"12px 0"}}>
-              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>
-                <div style={{fontSize:11,color:"#aaa"}}>{fmtDate(new Date(n.date))}{th&&<> &middot; {th.name}</>}{pc&&<> &middot; <i>{pc.title}</i></>}</div>
-                {th&&<span style={tag(th.tagBg,th.tagColor)}>{th.tag}</span>}
-              </div>
-              <div style={{fontSize:14,lineHeight:1.65,fontFamily:sf,whiteSpace:"pre-wrap"}}>{n.text}</div>
-              <button style={{...btn,fontSize:10,padding:"3px 8px",marginTop:6,color:"#c99",border:"1px solid #e0d0d0"}} onClick={()=>delNote(n.id)}>delete</button>
-            </div>
-          );
-        })}
-        <div style={{marginTop:"1.5rem"}}><button style={btn} onClick={()=>setView("position")}>My position</button></div>
+      <div style={{
+        position: "fixed", bottom: 0, left: 0, right: 0,
+        background: bg, borderTop: `2px solid ${border}`,
+        padding: "12px 0", zIndex: 100,
+        transition: "background 0.2s, border-color 0.2s",
+      }}>
+        <div style={{ maxWidth: 860, margin: "0 auto", padding: "0 1.25rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <button onClick={() => setView("home")} style={{ ...linkBtn, fontSize: 14, fontWeight: 700, display: "flex", alignItems: "center", gap: 8 }}>
+            <svg width="20" height="14" viewBox="0 0 20 14" fill="none" stroke={fg} strokeWidth="1.5">
+              <ellipse cx="10" cy="7" rx="9" ry="6" />
+              <circle cx="10" cy="7" r="3" />
+              <circle cx="10" cy="7" r="1" fill={fg} />
+            </svg>
+            HOME
+          </button>
+          <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+            <button onClick={() => setView("notebook")} style={linkBtn}>NOTES</button>
+            <button onClick={() => setView("position")} style={linkBtn}>POSITION</button>
+            <button onClick={() => setDark(d => !d)} style={{ ...linkBtn, fontSize: 16, padding: "2px 6px", border: `1px solid ${border}`, lineHeight: 1 }} title={dark ? "Light mode" : "Dark mode"}>
+              {dark ? "☀" : "●"}
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
 
-  // POSITION
-  if (view === "position") return (
-    <div style={{maxWidth:800,margin:"0 auto",padding:"1.5rem 1rem",fontFamily:ss}}>
-      
-      <div style={{cursor:"pointer",fontSize:13,color:"#aaa",marginBottom:"1.5rem"}} onClick={()=>setView("home")}>&larr; Home</div>
-      <h2 style={{fontFamily:sf,fontSize:18,fontWeight:400,margin:"0 0 4px"}}>My position</h2>
-      <div style={{fontSize:12,color:"#aaa",marginBottom:"1.5rem",lineHeight:1.5}}>A living draft \u2014 your evolving statement on supply chain aesthetics. What\u2019s your territory? Edit anytime.</div>
-      <textarea value={pos} onChange={e=>setPos(e.target.value)} placeholder="What interests you about supply chain as artistic material? What\u2019s different about your approach? This is a working document." style={{width:"100%",minHeight:280,border:"1px solid #eae8e2",borderRadius:8,padding:16,fontSize:15,fontFamily:sf,lineHeight:1.7,resize:"vertical",outline:"none",boxSizing:"border-box"}}/>
-      <div style={{marginTop:12,display:"flex",gap:8}}>
-        <button style={btnA} onClick={savePos}>Save</button>
-        <button style={btn} onClick={()=>setView("notebook")}>View notebook</button>
+  // ── HOME ──
+  if (view === "home") return (
+    <div style={W}>
+      <div style={{ padding: "2rem 0 1rem", borderBottom: `3px solid ${border}`, marginBottom: 0 }}>
+        <div style={{ ...title, fontSize: 32, lineHeight: 1.05 }}>
+          SUPPLY CHAIN<br />AESTHETICS
+        </div>
+        <div style={{ ...meta, marginTop: 8, fontSize: 12 }}>READING LAB</div>
       </div>
+
+      <div style={{ display: "flex", gap: 20, padding: "10px 0", borderBottom: `1px solid ${border}`, ...meta }}>
+        <span>{s.readPieces.length} PIECES READ</span>
+        <span>{s.notes.length} NOTES</span>
+      </div>
+
+      {THINKERS.map(t => {
+        const p = prog(t);
+        const nCount = tNotes(t.id).length;
+        return (
+          <div key={t.id} onClick={() => goRead(t)} style={{ borderBottom: `1px solid ${border}`, padding: "16px 0", cursor: "pointer" }}>
+            <div style={{ ...meta, fontSize: 10, marginBottom: 6 }}>
+              {t.tag}{p.done > 0 ? ` · ${p.done}/${p.total}` : ` · ${p.total} PIECES`}
+              {nCount > 0 && ` · ${nCount} NOTE${nCount !== 1 ? "S" : ""}`}
+            </div>
+            <div style={{ ...title, fontSize: 22, lineHeight: 1.15, color: fg }}>
+              {t.name}
+              {t.nameCn && <span style={{ fontWeight: 400, fontSize: 16, marginLeft: 8, opacity: 0.5 }}>{t.nameCn}</span>}
+            </div>
+            <div style={{ ...meta, marginTop: 4, fontStyle: "italic", fontSize: 12 }}>{t.tagline}</div>
+          </div>
+        );
+      })}
+
+      <BottomBar />
     </div>
   );
 
-  // READING
+  // ── NOTEBOOK ──
+  if (view === "notebook") {
+    const sorted = [...s.notes].sort((a, b) => new Date(b.date) - new Date(a.date));
+    return (
+      <div style={W}>
+        <div style={{ padding: "2rem 0 1rem", borderBottom: `3px solid ${border}`, display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
+          <div style={{ ...title, fontSize: 26 }}>NOTEBOOK</div>
+          <div style={meta}>{sorted.length} ENTR{sorted.length !== 1 ? "IES" : "Y"}</div>
+        </div>
+
+        {sorted.length === 0 && <div style={{ ...bodyText, padding: "2rem 0", color: fg2 }}>No notes yet. Start reading and jot down ideas as you go.</div>}
+
+        {sorted.map(n => {
+          const th = THINKERS.find(t => t.id === n.tid);
+          const pc = th?.pieces.find(p => p.id === n.pid);
+          return (
+            <div key={n.id} style={{ borderBottom: `1px solid ${border}`, padding: "14px 0" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", ...meta, fontSize: 10, marginBottom: 6 }}>
+                <span>{fmtDate(new Date(n.date))} · {th?.name || ""}</span>
+                <span>{pc?.format || ""}</span>
+              </div>
+              <div style={{ ...bodyText, whiteSpace: "pre-wrap" }}>{n.text}</div>
+              <button style={{ ...linkBtn, fontSize: 10, color: fg2, marginTop: 6 }} onClick={() => delNote(n.id)}>DELETE</button>
+            </div>
+          );
+        })}
+
+        <BottomBar />
+      </div>
+    );
+  }
+
+  // ── POSITION ──
+  if (view === "position") return (
+    <div style={W}>
+      <div style={{ padding: "2rem 0 1rem", borderBottom: `3px solid ${border}`, marginBottom: 20 }}>
+        <div style={{ ...title, fontSize: 26 }}>MY POSITION</div>
+        <div style={{ ...meta, marginTop: 6, fontStyle: "italic" }}>A living draft — your evolving statement on supply chain aesthetics.</div>
+      </div>
+
+      <textarea value={pos} onChange={e => setPos(e.target.value)}
+        placeholder="What interests you about supply chain as artistic material? What is different about your approach?"
+        style={{
+          width: "100%", minHeight: 320, border: `1px solid ${border}`, padding: 16,
+          fontSize: 15, fontFamily: "'Source Serif 4', Georgia, serif", lineHeight: 1.75,
+          resize: "vertical", outline: "none", boxSizing: "border-box",
+          background: inputBg, color: fg,
+        }}
+      />
+      <div style={{ marginTop: 14 }}>
+        <button style={solidBtn} onClick={savePos}>SAVE</button>
+      </div>
+
+      <BottomBar />
+    </div>
+  );
+
+  // ── READING ──
   if (view === "read" && thinker && piece) {
     const idx = thinker.pieces.indexOf(piece);
-    const next = thinker.pieces[idx+1];
-    const prev = thinker.pieces[idx-1];
-    const pNotes = s.notes.filter(n=>n.tid===thinker.id);
-    const hasIframeError = iframeErr[piece.id];
+    const next = thinker.pieces[idx + 1];
+    const prev = thinker.pieces[idx - 1];
+    const pNotes = s.notes.filter(n => n.tid === thinker.id);
 
     return (
-      <div style={{maxWidth:1000,margin:"0 auto",padding:"1.5rem 1rem",fontFamily:ss}}>
-        
-        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"1rem"}}>
-          <div style={{cursor:"pointer",fontSize:13,color:"#aaa"}} onClick={()=>setView("home")}>&larr; {thinker.name}{thinker.nameCn?` / ${thinker.nameCn}`:""}</div>
-          <span style={{fontSize:11,color:"#ccc"}}>{idx+1} / {thinker.pieces.length}</span>
+      <div style={W}>
+        {/* Header */}
+        <div style={{ padding: "2rem 0 1rem", borderBottom: `3px solid ${border}`, marginBottom: 0 }}>
+          <div style={{ ...meta, fontSize: 10, marginBottom: 8 }}>
+            {thinker.tag} · {idx + 1} OF {thinker.pieces.length}
+          </div>
+          <div style={{ ...title, fontSize: 24, color: fg }}>
+            {thinker.name}
+            {thinker.nameCn && <span style={{ fontWeight: 400, fontSize: 14, marginLeft: 8, opacity: 0.5 }}>{thinker.nameCn}</span>}
+          </div>
         </div>
 
         {/* Piece tabs */}
-        <div style={{display:"flex",gap:0,borderBottom:"1px solid #eae8e2",marginBottom:"1.25rem",overflowX:"auto"}}>
-          {thinker.pieces.map((p,i) => (
-            <button key={p.id} onClick={()=>goPiece(p)} style={{padding:"8px 14px",fontSize:12,border:"none",background:"transparent",cursor:"pointer",color:p.id===piece.id?"#222":"#ccc",borderBottom:p.id===piece.id?"2px solid #222":"2px solid transparent",marginBottom:-1,fontFamily:ss,whiteSpace:"nowrap"}}>
-              {i+1}. {p.title.length>28?p.title.slice(0,28)+"\u2026":p.title}{isRead(p.id)?" \u2713":""}
-            </button>
-          ))}
+        <div style={{ display: "flex", borderBottom: `1px solid ${border}` }}>
+          {thinker.pieces.map((p, i) => {
+            const active = p.id === piece.id;
+            return (
+              <button key={p.id} onClick={() => { setPiece(p); setNote(""); setExpandedNote(null); }} style={{
+                fontFamily: "'Space Mono', monospace", fontSize: 11, letterSpacing: "0.05em",
+                padding: "10px 16px", border: "none",
+                background: active ? fg : "transparent",
+                color: active ? bg : fg2,
+                cursor: "pointer", textTransform: "uppercase",
+                transition: "background 0.15s, color 0.15s",
+              }}>
+                {i + 1}. {p.format}{isRead(p.id) ? " ✓" : ""}
+              </button>
+            );
+          })}
         </div>
 
-        {/* Main layout */}
-        <div style={{display:"flex",gap:24,alignItems:"flex-start",flexWrap:"wrap"}}>
+        {/* Two-column layout */}
+        <div style={{ display: "flex", gap: 32, alignItems: "flex-start", flexWrap: "wrap", paddingTop: 20 }}>
           {/* Content column */}
-          <div style={{flex:"2 1 420px",minWidth:0}}>
+          <div style={{ flex: "2 1 420px", minWidth: 0 }}>
+            {/* Meta */}
+            <div style={{ ...meta, fontSize: 10, marginBottom: 6 }}>
+              {piece.format} · {piece.time}{piece.source ? ` · VIA ${piece.source.toUpperCase()}` : ""}
+            </div>
+
+            {/* Title block */}
+            <div style={{ ...title, fontSize: 26, lineHeight: 1.1, color: fg, marginBottom: 4 }}>{piece.title}</div>
+            <div style={{ ...meta, marginBottom: 20 }}>{piece.subtitle}</div>
+
             {/* Curator note */}
-            <div style={{borderLeft:"3px solid #D85A30",padding:"12px 16px",marginBottom:"1.25rem",background:"#faf8f5",borderRadius:"0 6px 6px 0"}}>
-              <div style={{fontSize:10,color:"#b0a090",textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:4}}>Curator\u2019s note</div>
-              <div style={{fontSize:13,lineHeight:1.6,color:"#665"}}>{piece.curatorNote}</div>
+            <div style={{
+              borderTop: `1px solid ${border}`, borderBottom: `1px solid ${border}`,
+              padding: "14px 0", marginBottom: 24,
+            }}>
+              <div style={{ ...meta, fontSize: 10, marginBottom: 6 }}>CURATOR'S NOTE</div>
+              <div style={{ ...bodyText, fontStyle: "italic" }}>{piece.curatorNote}</div>
             </div>
 
-            {/* Title */}
-            <h3 style={{fontFamily:sf,fontSize:20,fontWeight:400,margin:"0 0 4px"}}>{piece.title}</h3>
-            <div style={{fontSize:12,color:"#aaa",marginBottom:16}}>
-              {piece.subtitle} &middot; {piece.time}{piece.source?<> &middot; via {piece.source}</>:""}
-            </div>
-
-            {/* YOUTUBE */}
-            {piece.type==="youtube"&&piece.youtubeId&&(
-              <div style={{position:"relative",paddingBottom:"56.25%",height:0,marginBottom:16,borderRadius:8,overflow:"hidden",background:"#f0ede6"}}>
-                <iframe src={`https://www.youtube.com/embed/${piece.youtubeId}`} style={{position:"absolute",top:0,left:0,width:"100%",height:"100%",border:"none"}} allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowFullScreen title={piece.title}/>
-              </div>
-            )}
-
-            {/* IFRAME (essay/article embedded) */}
-            {piece.type==="iframe"&&!hasIframeError&&(
-              <div style={{marginBottom:16}}>
-                <div style={{border:"1px solid #eae8e2",borderRadius:8,overflow:"hidden",height:500,position:"relative"}}>
+            {/* YouTube */}
+            {piece.type === "youtube" && piece.youtubeId && (
+              <div style={{ marginBottom: 24, border: `1px solid ${border}` }}>
+                <div style={{ position: "relative", paddingBottom: "56.25%", height: 0 }}>
                   <iframe
-                    src={piece.iframeUrl}
-                    style={{width:"100%",height:"100%",border:"none"}}
-                    title={piece.title}
-                    sandbox="allow-same-origin allow-scripts allow-popups"
-                    onError={()=>setIframeErr(p=>({...p,[piece.id]:true}))}
+                    src={`https://www.youtube.com/embed/${piece.youtubeId}`}
+                    style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: "none" }}
+                    allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture"
+                    allowFullScreen title={piece.title}
                   />
                 </div>
-                <div style={{fontSize:11,color:"#bbb",marginTop:6,display:"flex",justifyContent:"space-between"}}>
-                  <span>Reading in-app</span>
-                  <a href={piece.fallbackUrl} target="_blank" rel="noopener noreferrer" style={{color:"#999",fontSize:11}}>Open in new tab instead &rarr;</a>
+              </div>
+            )}
+
+            {/* Iframe */}
+            {piece.type === "iframe" && !iframeErr[piece.id] && (
+              <div style={{ marginBottom: 24 }}>
+                <div style={{ border: `1px solid ${border}`, height: 500, overflow: "hidden" }}>
+                  <iframe
+                    src={piece.iframeUrl}
+                    style={{ width: "100%", height: "100%", border: "none" }}
+                    title={piece.title}
+                    sandbox="allow-same-origin allow-scripts allow-popups"
+                    onError={() => setIframeErr(p => ({ ...p, [piece.id]: true }))}
+                  />
+                </div>
+                <div style={{ ...meta, marginTop: 8, display: "flex", justifyContent: "space-between" }}>
+                  <span>READING IN-APP</span>
+                  <a href={piece.fallbackUrl} target="_blank" rel="noopener noreferrer" style={{ color: fg2, fontSize: 11, letterSpacing: "0.05em" }}>
+                    OPEN IN NEW TAB →
+                  </a>
                 </div>
               </div>
             )}
 
-            {/* IFRAME FALLBACK or LINK */}
-            {(piece.type==="link"||(piece.type==="iframe"&&hasIframeError))&&(
-              <div style={{border:"1px solid #eae8e2",borderRadius:8,padding:"24px",textAlign:"center",marginBottom:16}}>
-                {piece.type==="iframe"&&hasIframeError&&<div style={{fontSize:11,color:"#c99",marginBottom:8}}>This source doesn\u2019t allow in-app reading.</div>}
-                <div style={{fontSize:14,fontWeight:500,marginBottom:4,fontFamily:sf}}>{piece.title}</div>
-                <div style={{fontSize:12,color:"#aaa",marginBottom:14}}>{piece.time}</div>
-                <a href={piece.url||piece.fallbackUrl} target="_blank" rel="noopener noreferrer" style={{...btn,textDecoration:"none",display:"inline-block"}}>Open &rarr;</a>
-                {piece.altLinks&&(
-                  <div style={{fontSize:11,color:"#ccc",marginTop:10}}>
-                    Also: {piece.altLinks.map((l,i) => <span key={i}>{i>0?" \u00b7 ":""}<a href={l.url} target="_blank" rel="noopener noreferrer" style={{color:"#aaa"}}>{l.label}</a></span>)}
+            {/* Link / Fallback */}
+            {(piece.type === "link" || (piece.type === "iframe" && iframeErr[piece.id])) && (
+              <div style={{ border: `1px solid ${border}`, padding: 28, marginBottom: 24, textAlign: "center" }}>
+                {piece.type === "iframe" && iframeErr[piece.id] && (
+                  <div style={{ ...meta, fontSize: 10, marginBottom: 10 }}>SOURCE DOESN'T ALLOW IN-APP READING</div>
+                )}
+                <div style={{ ...title, fontSize: 20, marginBottom: 16, color: fg }}>{piece.title}</div>
+                <a href={piece.url || piece.fallbackUrl} target="_blank" rel="noopener noreferrer"
+                  style={{ ...solidBtn, textDecoration: "none", display: "inline-block" }}>
+                  OPEN →
+                </a>
+                {piece.altLinks && (
+                  <div style={{ ...meta, marginTop: 14 }}>
+                    ALSO: {piece.altLinks.map((l, i) => (
+                      <span key={i}>{i > 0 ? " · " : ""}
+                        <a href={l.url} target="_blank" rel="noopener noreferrer" style={{ color: fg2 }}>{l.label.toUpperCase()}</a>
+                      </span>
+                    ))}
                   </div>
                 )}
               </div>
             )}
 
             {/* Bottom actions */}
-            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",paddingTop:12,borderTop:"1px solid #eae8e2",flexWrap:"wrap",gap:8}}>
-              <div style={{display:"flex",gap:8}}>
-                {prev&&<button style={btn} onClick={()=>goPiece(prev)}>&larr; Prev</button>}
-                <button style={isRead(piece.id)?btnA:btn} onClick={()=>markRead(piece.id)}>{isRead(piece.id)?"\u2713 Read":"Mark as read"}</button>
+            <div style={{
+              borderTop: `1px solid ${border}`, paddingTop: 14,
+              display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 10,
+            }}>
+              <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+                {prev && <button style={outlineBtn} onClick={() => { setPiece(prev); setNote(""); setExpandedNote(null); }}>← PREV</button>}
+                <button
+                  style={isRead(piece.id) ? { ...outlineBtn, opacity: 0.5 } : solidBtn}
+                  onClick={() => markRead(piece.id)}
+                >
+                  {isRead(piece.id) ? "✓ READ" : "MARK READ"}
+                </button>
               </div>
-              {next&&<button style={btn} onClick={()=>goPiece(next)}>Next: {next.title.length>20?next.title.slice(0,20)+"\u2026":next.title} &rarr;</button>}
+              {next && <button style={outlineBtn} onClick={() => { setPiece(next); setNote(""); setExpandedNote(null); }}>NEXT →</button>}
             </div>
           </div>
 
-          {/* Notes column */}
-          <div style={{flex:"1 1 240px",minWidth:200}}>
-            <div style={{border:"1px solid #eae8e2",borderRadius:8,padding:14,position:"sticky",top:16}}>
-              <div style={{fontSize:12,fontWeight:500,color:"#999",marginBottom:8}}>Notes</div>
-              <textarea value={note} onChange={e=>setNote(e.target.value)} placeholder="Jot ideas, fragments, questions\u2026" style={{width:"100%",minHeight:100,border:"1px solid #eae8e2",borderRadius:6,padding:10,fontSize:13,fontFamily:sf,lineHeight:1.6,resize:"vertical",outline:"none",boxSizing:"border-box",marginBottom:8}}/>
-              <button style={note.trim()?btnA:btn} onClick={addNote} disabled={!note.trim()}>Save note</button>
-              {pNotes.length>0&&(
-                <div style={{marginTop:16,borderTop:"1px solid #eae8e2",paddingTop:12}}>
-                  <div style={{fontSize:11,color:"#ccc",marginBottom:8}}>Notes on {thinker.name}:</div>
+          {/* Notes sidebar */}
+          <div style={{ flex: "1 1 240px", minWidth: 200 }}>
+            <div style={{ borderTop: `3px solid ${border}`, paddingTop: 14 }}>
+              <div style={{ ...meta, fontSize: 10, marginBottom: 10 }}>NOTES</div>
+              <textarea value={note} onChange={e => setNote(e.target.value)}
+                placeholder="Jot ideas, fragments, questions..."
+                style={{
+                  width: "100%", minHeight: 120, border: `1px solid ${border}`,
+                  padding: 12, fontSize: 14, fontFamily: "'Source Serif 4', Georgia, serif",
+                  lineHeight: 1.6, resize: "vertical", outline: "none",
+                  boxSizing: "border-box", background: inputBg, color: fg,
+                  marginBottom: 10,
+                }}
+              />
+              <button
+                style={note.trim() ? solidBtn : { ...solidBtn, opacity: 0.3, cursor: "default" }}
+                onClick={addNote} disabled={!note.trim()}
+              >
+                SAVE NOTE
+              </button>
+
+              {pNotes.length > 0 && (
+                <div style={{ marginTop: 24, borderTop: `1px solid ${border}`, paddingTop: 14 }}>
+                  <div style={{ ...meta, fontSize: 10, marginBottom: 10 }}>ON {thinker.name}:</div>
                   {pNotes.slice(-5).reverse().map(n => {
-                    const pc = thinker.pieces.find(p=>p.id===n.pid);
+                    const pc = thinker.pieces.find(p => p.id === n.pid);
+                    const expanded = expandedNote === n.id;
+                    const text = n.text.length > 120 && !expanded ? n.text.slice(0, 120) + "…" : n.text;
                     return (
-                      <div key={n.id} style={{background:"#f8f7f4",padding:"8px 10px",borderRadius:6,marginBottom:6,fontSize:12,lineHeight:1.5,color:"#777",fontFamily:sf,whiteSpace:"pre-wrap"}}>
-                        <div style={{fontSize:10,color:"#ccc",marginBottom:3}}>{fmtDate(new Date(n.date))}{pc?` \u00b7 ${pc.title}`:""}</div>
-                        {n.text.length>150?n.text.slice(0,150)+"\u2026":n.text}
+                      <div key={n.id} style={{ borderBottom: `1px solid ${borderLight}`, paddingBottom: 10, marginBottom: 10 }}>
+                        <div style={{ ...meta, fontSize: 10, marginBottom: 4 }}>
+                          {fmtDate(new Date(n.date))}{pc ? ` · ${pc.format}` : ""}
+                        </div>
+                        <div style={{ ...bodyText, fontSize: 13 }}>{text}</div>
+                        {n.text.length > 120 && (
+                          <button style={{ ...linkBtn, fontSize: 10, color: fg2, marginTop: 4 }}
+                            onClick={() => setExpandedNote(expanded ? null : n.id)}>
+                            {expanded ? "LESS" : "MORE"}
+                          </button>
+                        )}
                       </div>
                     );
                   })}
@@ -461,6 +553,8 @@ export default function App() {
             </div>
           </div>
         </div>
+
+        <BottomBar />
       </div>
     );
   }

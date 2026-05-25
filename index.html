@@ -6,16 +6,24 @@
     <title>Supply Chain Aesthetics — Reading Lab</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:wght@400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@400;600;700&family=Source+Serif+4:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
     <style>
       *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
       body {
-        font-family: 'DM Sans', 'Helvetica Neue', Helvetica, sans-serif;
+        font-family: 'Space Mono', 'Courier New', monospace;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        background: #fdfcfa;
-        color: #222;
+        background: #fff;
+        color: #000;
+        transition: background 0.2s, color 0.2s;
       }
+      body.dark { background: #111; color: #eee; }
+      ::selection { background: #000; color: #fff; }
+      body.dark ::selection { background: #fff; color: #000; }
+      ::-webkit-scrollbar { width: 6px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: #888; }
+      body.dark ::-webkit-scrollbar-thumb { background: #555; }
     </style>
   </head>
   <body>
