@@ -476,20 +476,22 @@ export default function App() {
 
                 {linkOpened && piece.type === "link" ? (
                   <div>
-                    <div style={{ ...meta, fontSize: 11, marginBottom: 10 }}>READING EXTERNALLY</div>
-                    <a href={piece.url || piece.fallbackUrl} target="_blank" rel="noopener noreferrer" style={outlineBtn}>
+                    <div style={{ ...meta, fontSize: 11, marginBottom: 10 }}>READING IN SEPARATE WINDOW</div>
+                    <button style={outlineBtn} onClick={() => {
+                      const url = piece.url || piece.fallbackUrl;
+                      window.open(url, "sc-reading", "width=900,height=700,scrollbars=yes,resizable=yes");
+                    }}>
                       RE-OPEN ↗
-                    </a>
+                    </button>
                   </div>
                 ) : (
-                  <a
-                    href={piece.type === "link" ? piece.url : piece.fallbackUrl}
-                    target="_blank" rel="noopener noreferrer"
-                    style={solidBtn}
-                    onClick={() => { if (piece.type === "link") setLinkOpened(true); }}
-                  >
-                    OPEN →
-                  </a>
+                  <button style={solidBtn} onClick={() => {
+                    const url = piece.type === "link" ? piece.url : piece.fallbackUrl;
+                    window.open(url, "sc-reading", "width=900,height=700,scrollbars=yes,resizable=yes");
+                    if (piece.type === "link") setLinkOpened(true);
+                  }}>
+                    OPEN IN NEW WINDOW →
+                  </button>
                 )}
 
                 {piece.altLinks && (
