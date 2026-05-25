@@ -250,7 +250,8 @@ export default function App() {
       <div style={{
         position: "fixed", bottom: 0, left: 0, right: 0,
         background: bg, borderTop: `2px solid ${border}`,
-        padding: "12px 0", zIndex: 100,
+        padding: "12px 0", paddingBottom: "calc(12px + env(safe-area-inset-bottom))",
+        zIndex: 100,
         transition: "background 0.2s, border-color 0.2s",
       }}>
         <div style={{ maxWidth: 860, margin: "0 auto", padding: "0 1.25rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
