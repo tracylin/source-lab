@@ -204,6 +204,7 @@ export default function App() {
   const [pos, setPos] = useState("");
   const [iframeErr, setIframeErr] = useState({});
   const [expandedNote, setExpandedNote] = useState(null);
+  const [navOpen, setNavOpen] = useState(false);
 
   useEffect(() => { const d = load(); setS(d); setPos(d.position || ""); }, []);
   useEffect(() => { if (s) save(s); }, [s]);
@@ -248,35 +249,106 @@ export default function App() {
   const outlineBtn = { ...btnBase, background: "transparent", color: fg, border: `1.5px solid ${border}`, padding: "13px 22px", minHeight: 44 };
   const ghostBtn = { ...btnBase, background: "transparent", border: "none", color: fg, padding: "10px 4px" };
 
-  const W = { maxWidth: 900, margin: "0 auto", padding: "0 1.5rem", paddingBottom: 90 };
+  const W = { maxWidth: 900, margin: "0 auto", padding: "0 1.5rem", paddingBottom: 40 };
 
-  // ── BOTTOM BAR ──
-  function BottomBar() {
+  // ── FLOATING NAV ──
+  const fabSize = 52;
+  const fabSmall = 44;
+  const fabShadow = dark ? "0 2px 16px rgba(0,0,0,0.6)" : "0 2px 16px rgba(0,0,0,0.15)";
+  const fabBg = dark ? "#222" : "#fff";
+  const fabBgActive = fg;
+
+  function FloatingNav() {
     return (
-      <nav style={{
-        position: "fixed", bottom: 0, left: 0, right: 0,
-        background: bg, borderTop: `2px solid ${border}`,
-        padding: "0", paddingBottom: "env(safe-area-inset-bottom)",
-        zIndex: 100, transition: "background 0.2s, border-color 0.2s",
-      }}>
-        <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 1.5rem", display: "flex", justifyContent: "space-between", alignItems: "stretch", minHeight: 56 }}>
-          <button onClick={() => setView("home")} style={{ ...ghostBtn, fontSize: 13, fontWeight: 700, display: "flex", alignItems: "center", gap: 10 }}>
-            <svg width="22" height="16" viewBox="0 0 20 14" fill="none" stroke={fg} strokeWidth="1.5">
+      <>
+        {/* Home / Back — always visible when not on home */}
+        {view !== "home" && (
+          <button onClick={() => { setView("home"); setNavOpen(false); }} title="Home" style={{
+            position: "fixed", bottom: "calc(24px + env(safe-area-inset-bottom))",
+            left: 24, zIndex: 200,
+            width: fabSize, height: fabSize, borderRadius: "50%",
+            background: fabBg, color: fg, border: `1.5px solid ${border}`,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            cursor: "pointer", boxShadow: fabShadow,
+            WebkitTapHighlightColor: "transparent",
+          }}>
+            <svg width="20" height="14" viewBox="0 0 20 14" fill="none" stroke={fg} strokeWidth="1.5">
               <ellipse cx="10" cy="7" rx="9" ry="6" />
               <circle cx="10" cy="7" r="3" />
               <circle cx="10" cy="7" r="1" fill={fg} />
             </svg>
-            HOME
           </button>
-          <div style={{ display: "flex", gap: 0, alignItems: "stretch" }}>
-            <button onClick={() => setView("notebook")} style={{ ...ghostBtn, padding: "10px 16px", fontSize: 12 }}>NOTES</button>
-            <button onClick={() => setView("position")} style={{ ...ghostBtn, padding: "10px 16px", fontSize: 12 }}>POSITION</button>
-            <button onClick={() => setDark(d => !d)} style={{ ...ghostBtn, padding: "10px 14px", fontSize: 18, lineHeight: 1 }} title={dark ? "Light mode" : "Dark mode"}>
-              {dark ? "☀" : "●"}
-            </button>
-          </div>
+        )}
+
+        {/* Menu FAB — bottom right */}
+        <div style={{
+          position: "fixed", bottom: "calc(24px + env(safe-area-inset-bottom))",
+          right: 24, zIndex: 200,
+          display: "flex", flexDirection: "column-reverse", alignItems: "center", gap: 14,
+        }}>
+          <button onClick={() => setNavOpen(o => !o)} style={{
+            width: fabSize, height: fabSize, borderRadius: "50%",
+            background: navOpen ? fabBgActive : fabBg,
+            color: navOpen ? bg : fg,
+            border: `1.5px solid ${border}`,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            cursor: "pointer", boxShadow: fabShadow,
+            transition: "background 0.2s, color 0.2s",
+            WebkitTapHighlightColor: "transparent",
+          }}>
+            {navOpen ? (
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                <line x1="4" y1="4" x2="14" y2="14"/><line x1="14" y1="4" x2="4" y2="14"/>
+              </svg>
+            ) : (
+              <svg width="20" height="14" viewBox="0 0 20 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                <line x1="3" y1="2" x2="17" y2="2"/><line x1="3" y1="7" x2="17" y2="7"/><line x1="3" y1="12" x2="17" y2="12"/>
+              </svg>
+            )}
+          </button>
+
+          {navOpen && (
+            <>
+              <button onClick={() => { setView("notebook"); setNavOpen(false); }} title="Notes" style={{
+                width: fabSmall, height: fabSmall, borderRadius: "50%",
+                background: view === "notebook" ? fabBgActive : fabBg,
+                color: view === "notebook" ? bg : fg,
+                border: `1.5px solid ${border}`,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                cursor: "pointer", boxShadow: fabShadow,
+                WebkitTapHighlightColor: "transparent",
+              }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                </svg>
+              </button>
+              <button onClick={() => { setView("position"); setNavOpen(false); }} title="Position" style={{
+                width: fabSmall, height: fabSmall, borderRadius: "50%",
+                background: view === "position" ? fabBgActive : fabBg,
+                color: view === "position" ? bg : fg,
+                border: `1.5px solid ${border}`,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                cursor: "pointer", boxShadow: fabShadow,
+                WebkitTapHighlightColor: "transparent",
+              }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+              </button>
+              <button onClick={() => { setDark(d => !d); setNavOpen(false); }} title={dark ? "Light mode" : "Dark mode"} style={{
+                width: fabSmall, height: fabSmall, borderRadius: "50%",
+                background: fabBg, color: fg, border: `1.5px solid ${border}`,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                cursor: "pointer", boxShadow: fabShadow,
+                fontSize: 16, lineHeight: 1,
+                WebkitTapHighlightColor: "transparent",
+              }}>
+                {dark ? "☀" : "●"}
+              </button>
+            </>
+          )}
         </div>
-      </nav>
+      </>
     );
   }
 
@@ -318,7 +390,7 @@ export default function App() {
         );
       })}
 
-      <BottomBar />
+      <FloatingNav />
     </div>
   );
 
@@ -355,7 +427,7 @@ export default function App() {
           );
         })}
 
-        <BottomBar />
+        <FloatingNav />
       </div>
     );
   }
@@ -385,7 +457,7 @@ export default function App() {
         <button style={solidBtn} onClick={savePos}>SAVE</button>
       </div>
 
-      <BottomBar />
+      <FloatingNav />
     </div>
   );
 
@@ -590,7 +662,7 @@ export default function App() {
           </aside>
         </div>
 
-        <BottomBar />
+        <FloatingNav />
       </div>
     );
   }
