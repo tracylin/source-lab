@@ -232,7 +232,7 @@ export default function App() {
   function markRead(id) { if (!isRead(id)) setS(p => ({ ...p, readPieces: [...p.readPieces, id] })); }
   function addNote() {
     if (!note.trim()) return;
-    setS(p => ({ ...p, notes: [...p.notes, { id: Date.now().toString(), tid: thinker.id, pid: piece.id, text: note.trim(), date: new Date().toISOString() }] }));
+    setS(p => ({ ...p, notes: [...p.notes, { id: Date.now().toString(), tid: thinker.id, pid: piece.id, pTitle: piece.title, text: note.trim(), date: new Date().toISOString() }] }));
     setNote("");
   }
   function delNote(id) { setS(p => ({ ...p, notes: p.notes.filter(n => n.id !== id) })); }
@@ -258,21 +258,59 @@ export default function App() {
   const fabBg = dark ? "#222" : "#fff";
   const fabBgActive = fg;
 
+  const fabItem = (onClick, title, icon, isActive) => ({
+    onClick, title,
+    style: {
+      width: fabSmall, height: fabSmall, borderRadius: "50%",
+      background: isActive ? fabBgActive : fabBg,
+      color: isActive ? bg : fg,
+      border: `1.5px solid ${border}`,
+      display: "flex", alignItems: "center", justifyContent: "center",
+      cursor: "pointer", boxShadow: fabShadow,
+      WebkitTapHighlightColor: "transparent",
+    },
+    children: icon,
+  });
+
   function FloatingNav() {
     return (
-      <>
-        {/* Home / Back — always visible when not on home */}
+      <div style={{
+        position: "fixed", bottom: "calc(24px + env(safe-area-inset-bottom))",
+        right: 24, zIndex: 200,
+        display: "flex", flexDirection: "column-reverse", alignItems: "center", gap: 12,
+      }}>
+        {/* Menu FAB — always at bottom */}
+        <button onClick={() => setNavOpen(o => !o)} style={{
+          width: fabSize, height: fabSize, borderRadius: "50%",
+          background: navOpen ? fabBgActive : fabBg,
+          color: navOpen ? bg : fg,
+          border: `1.5px solid ${border}`,
+          display: "flex", alignItems: "center", justifyContent: "center",
+          cursor: "pointer", boxShadow: fabShadow,
+          transition: "background 0.2s, color 0.2s",
+          WebkitTapHighlightColor: "transparent",
+        }}>
+          {navOpen ? (
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <line x1="4" y1="4" x2="14" y2="14"/><line x1="14" y1="4" x2="4" y2="14"/>
+            </svg>
+          ) : (
+            <svg width="20" height="14" viewBox="0 0 20 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <line x1="3" y1="2" x2="17" y2="2"/><line x1="3" y1="7" x2="17" y2="7"/><line x1="3" y1="12" x2="17" y2="12"/>
+            </svg>
+          )}
+        </button>
+
+        {/* Home — always visible above FAB when not on home */}
         {view !== "home" && (
           <button onClick={() => { setView("home"); setNavOpen(false); }} title="Home" style={{
-            position: "fixed", bottom: "calc(24px + env(safe-area-inset-bottom))",
-            left: 24, zIndex: 200,
-            width: fabSize, height: fabSize, borderRadius: "50%",
+            width: fabSmall, height: fabSmall, borderRadius: "50%",
             background: fabBg, color: fg, border: `1.5px solid ${border}`,
             display: "flex", alignItems: "center", justifyContent: "center",
             cursor: "pointer", boxShadow: fabShadow,
             WebkitTapHighlightColor: "transparent",
           }}>
-            <svg width="20" height="14" viewBox="0 0 20 14" fill="none" stroke={fg} strokeWidth="1.5">
+            <svg width="18" height="13" viewBox="0 0 20 14" fill="none" stroke={fg} strokeWidth="1.5">
               <ellipse cx="10" cy="7" rx="9" ry="6" />
               <circle cx="10" cy="7" r="3" />
               <circle cx="10" cy="7" r="1" fill={fg} />
@@ -280,75 +318,48 @@ export default function App() {
           </button>
         )}
 
-        {/* Menu FAB — bottom right */}
-        <div style={{
-          position: "fixed", bottom: "calc(24px + env(safe-area-inset-bottom))",
-          right: 24, zIndex: 200,
-          display: "flex", flexDirection: "column-reverse", alignItems: "center", gap: 14,
-        }}>
-          <button onClick={() => setNavOpen(o => !o)} style={{
-            width: fabSize, height: fabSize, borderRadius: "50%",
-            background: navOpen ? fabBgActive : fabBg,
-            color: navOpen ? bg : fg,
-            border: `1.5px solid ${border}`,
-            display: "flex", alignItems: "center", justifyContent: "center",
-            cursor: "pointer", boxShadow: fabShadow,
-            transition: "background 0.2s, color 0.2s",
-            WebkitTapHighlightColor: "transparent",
-          }}>
-            {navOpen ? (
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                <line x1="4" y1="4" x2="14" y2="14"/><line x1="14" y1="4" x2="4" y2="14"/>
+        {/* Expanded nav items — stack above home */}
+        {navOpen && (
+          <>
+            <button onClick={() => { setView("notebook"); setNavOpen(false); }} title="Notes" style={{
+              width: fabSmall, height: fabSmall, borderRadius: "50%",
+              background: view === "notebook" ? fabBgActive : fabBg,
+              color: view === "notebook" ? bg : fg,
+              border: `1.5px solid ${border}`,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              cursor: "pointer", boxShadow: fabShadow,
+              WebkitTapHighlightColor: "transparent",
+            }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
               </svg>
-            ) : (
-              <svg width="20" height="14" viewBox="0 0 20 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                <line x1="3" y1="2" x2="17" y2="2"/><line x1="3" y1="7" x2="17" y2="7"/><line x1="3" y1="12" x2="17" y2="12"/>
+            </button>
+            <button onClick={() => { setView("position"); setNavOpen(false); }} title="Position" style={{
+              width: fabSmall, height: fabSmall, borderRadius: "50%",
+              background: view === "position" ? fabBgActive : fabBg,
+              color: view === "position" ? bg : fg,
+              border: `1.5px solid ${border}`,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              cursor: "pointer", boxShadow: fabShadow,
+              WebkitTapHighlightColor: "transparent",
+            }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
               </svg>
-            )}
-          </button>
-
-          {navOpen && (
-            <>
-              <button onClick={() => { setView("notebook"); setNavOpen(false); }} title="Notes" style={{
-                width: fabSmall, height: fabSmall, borderRadius: "50%",
-                background: view === "notebook" ? fabBgActive : fabBg,
-                color: view === "notebook" ? bg : fg,
-                border: `1.5px solid ${border}`,
-                display: "flex", alignItems: "center", justifyContent: "center",
-                cursor: "pointer", boxShadow: fabShadow,
-                WebkitTapHighlightColor: "transparent",
-              }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
-                </svg>
-              </button>
-              <button onClick={() => { setView("position"); setNavOpen(false); }} title="Position" style={{
-                width: fabSmall, height: fabSmall, borderRadius: "50%",
-                background: view === "position" ? fabBgActive : fabBg,
-                color: view === "position" ? bg : fg,
-                border: `1.5px solid ${border}`,
-                display: "flex", alignItems: "center", justifyContent: "center",
-                cursor: "pointer", boxShadow: fabShadow,
-                WebkitTapHighlightColor: "transparent",
-              }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                </svg>
-              </button>
-              <button onClick={() => { setDark(d => !d); setNavOpen(false); }} title={dark ? "Light mode" : "Dark mode"} style={{
-                width: fabSmall, height: fabSmall, borderRadius: "50%",
-                background: fabBg, color: fg, border: `1.5px solid ${border}`,
-                display: "flex", alignItems: "center", justifyContent: "center",
-                cursor: "pointer", boxShadow: fabShadow,
-                fontSize: 16, lineHeight: 1,
-                WebkitTapHighlightColor: "transparent",
-              }}>
-                {dark ? "☀" : "●"}
-              </button>
-            </>
-          )}
-        </div>
-      </>
+            </button>
+            <button onClick={() => { setDark(d => !d); setNavOpen(false); }} title={dark ? "Light mode" : "Dark mode"} style={{
+              width: fabSmall, height: fabSmall, borderRadius: "50%",
+              background: fabBg, color: fg, border: `1.5px solid ${border}`,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              cursor: "pointer", boxShadow: fabShadow,
+              fontSize: 16, lineHeight: 1,
+              WebkitTapHighlightColor: "transparent",
+            }}>
+              {dark ? "☀" : "●"}
+            </button>
+          </>
+        )}
+      </div>
     );
   }
 
@@ -378,7 +389,7 @@ export default function App() {
             WebkitTapHighlightColor: "transparent",
           }}>
             <div style={{ ...meta, fontSize: 11, marginBottom: 8 }}>
-              {t.tag}{p.done > 0 ? ` · ${p.done}/${p.total}` : ` · ${p.total} PIECES`}
+              {t.tag}
               {nCount > 0 && ` · ${nCount} NOTE${nCount !== 1 ? "S" : ""}`}
             </div>
             <div style={{ ...heading, fontSize: 24, lineHeight: 1.15, color: fg }}>
@@ -386,6 +397,37 @@ export default function App() {
               {t.nameCn && <span style={{ fontWeight: 400, fontSize: 16, marginLeft: 10, opacity: 0.4 }}>{t.nameCn}</span>}
             </div>
             <div style={{ ...meta, marginTop: 6, fontStyle: "italic", fontSize: 13 }}>{t.tagline}</div>
+
+            {/* Per-piece progress */}
+            <div style={{ display: "flex", gap: 8, marginTop: 12, flexWrap: "wrap" }}>
+              {t.pieces.map(pc => {
+                const done = isRead(pc.id);
+                return (
+                  <div key={pc.id} style={{
+                    display: "flex", alignItems: "center", gap: 5,
+                    padding: "4px 10px",
+                    border: `1px solid ${done ? border : borderLight}`,
+                    background: done ? (dark ? "#1a1a1a" : "#f0f0f0") : "transparent",
+                    opacity: done ? 1 : 0.5,
+                  }}>
+                    <span style={{
+                      width: 8, height: 8,
+                      background: done ? fg : "transparent",
+                      border: done ? "none" : `1.5px solid ${fg2}`,
+                      display: "inline-block", flexShrink: 0,
+                    }} />
+                    <span style={{ ...meta, fontSize: 10, color: done ? fg : fg2 }}>
+                      {pc.format}
+                    </span>
+                  </div>
+                );
+              })}
+              {p.done > 0 && (
+                <span style={{ ...meta, fontSize: 10, alignSelf: "center", marginLeft: 4 }}>
+                  {p.done}/{p.total}
+                </span>
+              )}
+            </div>
           </div>
         );
       })}
@@ -415,12 +457,17 @@ export default function App() {
         {sorted.map(n => {
           const th = THINKERS.find(t => t.id === n.tid);
           const pc = th?.pieces.find(p => p.id === n.pid);
+          const pieceTitle = n.pTitle || pc?.title || "";
           return (
             <div key={n.id} style={{ borderBottom: `1px solid ${borderLight}`, padding: "18px 0" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", ...meta, fontSize: 11, marginBottom: 8 }}>
-                <span>{fmtDate(new Date(n.date))} · {th?.name || ""}</span>
-                <span>{pc?.format || ""}</span>
+              <div style={{ ...meta, fontSize: 11, marginBottom: 4 }}>
+                {fmtDate(new Date(n.date))} · {th?.name || ""} · {pc?.format || ""}
               </div>
+              {pieceTitle && (
+                <div style={{ ...meta, fontSize: 11, marginBottom: 8, color: fg, fontWeight: 600 }}>
+                  {pieceTitle}
+                </div>
+              )}
               <div style={{ ...bodyText, whiteSpace: "pre-wrap" }}>{n.text}</div>
               <button style={{ ...ghostBtn, fontSize: 11, color: fg2, marginTop: 8 }} onClick={() => delNote(n.id)}>DELETE</button>
             </div>
@@ -639,13 +686,17 @@ export default function App() {
                   <div style={{ ...meta, fontSize: 11, marginBottom: 12 }}>ON {thinker.name}:</div>
                   {pNotes.slice(-5).reverse().map(n => {
                     const pc = thinker.pieces.find(p => p.id === n.pid);
+                    const pieceTitle = n.pTitle || pc?.title || "";
                     const expanded = expandedNote === n.id;
                     const text = n.text.length > 120 && !expanded ? n.text.slice(0, 120) + "…" : n.text;
                     return (
                       <div key={n.id} style={{ borderBottom: `1px solid ${borderLight}`, paddingBottom: 12, marginBottom: 12 }}>
-                        <div style={{ ...meta, fontSize: 11, marginBottom: 5 }}>
+                        <div style={{ ...meta, fontSize: 11, marginBottom: 3 }}>
                           {fmtDate(new Date(n.date))}{pc ? ` · ${pc.format}` : ""}
                         </div>
+                        {pieceTitle && (
+                          <div style={{ ...meta, fontSize: 10, marginBottom: 5, color: fg, fontWeight: 600 }}>{pieceTitle}</div>
+                        )}
                         <div style={{ ...bodyText, fontSize: 14 }}>{text}</div>
                         {n.text.length > 120 && (
                           <button style={{ ...ghostBtn, fontSize: 11, color: fg2, marginTop: 4 }}
