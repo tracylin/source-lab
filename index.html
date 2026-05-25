@@ -17,6 +17,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@400;600;700&family=Source+Serif+4:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
     <style>
       *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+      }
       body {
         font-family: 'Space Mono', 'Courier New', monospace;
         -webkit-font-smoothing: antialiased;
@@ -27,14 +33,23 @@
         padding-top: env(safe-area-inset-top);
         padding-left: env(safe-area-inset-left);
         padding-right: env(safe-area-inset-right);
+        overscroll-behavior-y: none;
       }
       body.dark { background: #111; color: #eee; }
       ::selection { background: #000; color: #fff; }
       body.dark ::selection { background: #fff; color: #000; }
-      ::-webkit-scrollbar { width: 6px; }
+      ::-webkit-scrollbar { width: 6px; height: 0; }
       ::-webkit-scrollbar-track { background: transparent; }
-      ::-webkit-scrollbar-thumb { background: #888; }
+      ::-webkit-scrollbar-thumb { background: #888; border-radius: 3px; }
       body.dark ::-webkit-scrollbar-thumb { background: #555; }
+      /* Hide horizontal scrollbar on tab strips */
+      [style*="overflow-x: auto"]::-webkit-scrollbar { display: none; }
+      /* Prevent double-tap zoom on buttons */
+      button, a { touch-action: manipulation; }
+      /* Textarea auto-zoom prevention on iPad */
+      @media (max-width: 1024px) {
+        textarea, input { font-size: 16px !important; }
+      }
     </style>
   </head>
   <body>
