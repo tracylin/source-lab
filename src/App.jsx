@@ -133,6 +133,17 @@ const THINKERS = [
         type: "youtube",
         youtubeId: "G0DNyuWvmjU",
       },
+      {
+        id: "easterling-iot",
+        title: "AN INTERNET OF THINGS",
+        subtitle: "e-flux journal #31, 2012",
+        format: "ESSAY",
+        time: "20 MIN READ",
+        curatorNote: "Easterling examines how zones, free trade areas, and infrastructure networks form an 'internet of things' — not the tech buzzword, but a literal spatial web of objects, standards, and protocols that governs global exchange. This is supply chain as operating system.",
+        type: "iframe",
+        iframeUrl: "https://www.e-flux.com/journal/31/68189/an-internet-of-things/",
+        fallbackUrl: "https://www.e-flux.com/journal/31/68189/an-internet-of-things/",
+      },
     ],
   },
   {
