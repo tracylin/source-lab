@@ -437,7 +437,7 @@ export default function App() {
         );
       })}
 
-      <FloatingNav />
+      {FloatingNav()}
     </div>
   );
 
@@ -479,7 +479,7 @@ export default function App() {
           );
         })}
 
-        <FloatingNav />
+        {FloatingNav()}
       </div>
     );
   }
@@ -504,14 +504,14 @@ export default function App() {
           resize: "vertical", outline: "none", boxSizing: "border-box",
           background: inputBg, color: fg, WebkitAppearance: "none",
           WebkitUserSelect: "text", userSelect: "text",
-          touchAction: "manipulation",
+          transform: "translateZ(0)",
         }}
       />
       <div style={{ marginTop: 18 }}>
         <button style={solidBtn} onClick={savePos}>SAVE</button>
       </div>
 
-      <FloatingNav />
+      {FloatingNav()}
     </div>
   );
 
@@ -680,7 +680,7 @@ export default function App() {
                   boxSizing: "border-box", background: inputBg, color: fg,
                   marginBottom: 12, WebkitAppearance: "none",
                   WebkitUserSelect: "text", userSelect: "text",
-                  touchAction: "manipulation",
+                  transform: "translateZ(0)",
                 }}
               />
               <button
@@ -722,7 +722,7 @@ export default function App() {
           </aside>
         </div>
 
-        <FloatingNav />
+        {FloatingNav()}
       </div>
     );
   }
