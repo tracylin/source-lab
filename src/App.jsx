@@ -200,7 +200,7 @@ const THINKERS = [
 // ── PERSISTENCE (unchanged keys & shape) ──
 const SK = "scrl-v5";
 const DK = "scrl-dark";
-function getDefault() { return { readPieces: [], notes: [], position: "" }; }
+function getDefault() { return { readPieces: [], notes: [], position: "", savedPieces: [] }; }
 function load() { try { const r = localStorage.getItem(SK); if (r) return JSON.parse(r); } catch(e){} return getDefault(); }
 function save(s) { try { localStorage.setItem(SK, JSON.stringify(s)); } catch(e){} }
 function fmtDate(d) { return `${String(d.getMonth()+1).padStart(2,"0")}.${String(d.getDate()).padStart(2,"0")}.${d.getFullYear()}`; }
@@ -237,10 +237,13 @@ export default function App() {
 
   // ── DATA HELPERS ──
   const isRead = id => s.readPieces.includes(id);
+  const saved = s.savedPieces || [];
+  const isSaved = id => saved.includes(id);
   const prog = t => { const d = t.pieces.filter(p => isRead(p.id)).length; return { done: d, total: t.pieces.length }; };
   const tNotes = id => s.notes.filter(n => n.tid === id);
 
   function markRead(id) { if (!isRead(id)) setS(p => ({ ...p, readPieces: [...p.readPieces, id] })); }
+  function toggleSave(id) { setS(p => { const sv = p.savedPieces || []; return { ...p, savedPieces: sv.includes(id) ? sv.filter(x => x !== id) : [...sv, id] }; }); }
   function addNote() {
     if (!note.trim()) return;
     setS(p => ({ ...p, notes: [...p.notes, { id: Date.now().toString(), tid: thinker.id, pid: piece.id, pTitle: piece.title, text: note.trim(), date: new Date().toISOString() }] }));
@@ -272,7 +275,7 @@ export default function App() {
         });
       });
     }
-    lines.push("─", s.readPieces.length + " pieces read · " + s.notes.length + " notes");
+    lines.push("─", s.readPieces.length + " pieces read · " + s.notes.length + " notes · " + saved.length + " saved");
     const text = lines.join("\n");
     if (navigator.share) {
       try { await navigator.share({ title: "SC Lab Export", text }); } catch(e) {}
@@ -437,7 +440,32 @@ export default function App() {
       <div style={{ display: "flex", gap: 24, padding: "14px 0", borderBottom: `1px solid ${borderLight}`, ...meta, fontSize: 12 }}>
         <span>{s.readPieces.length} PIECES READ</span>
         <span>{s.notes.length} NOTES</span>
+        {saved.length > 0 && <span>{saved.length} SAVED</span>}
       </div>
+
+      {saved.length > 0 && (
+        <div style={{ padding: "16px 0", borderBottom: `1px solid ${borderLight}` }}>
+          <div style={{ ...meta, fontSize: 11, marginBottom: 12 }}>♥ SAVED</div>
+          <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+            {saved.map(sid => {
+              const th = THINKERS.find(t => t.pieces.some(p => p.id === sid));
+              const pc = th?.pieces.find(p => p.id === sid);
+              if (!th || !pc) return null;
+              return (
+                <button key={sid} onClick={() => { setThinker(th); setPiece(pc); setNote(""); setIframeErr({}); setExpandedNote(null); setView("read"); }} style={{
+                  ...btnBase, fontSize: 11, padding: "8px 14px",
+                  border: `1px solid ${border}`, background: "transparent", color: fg,
+                  textAlign: "left", lineHeight: 1.3, cursor: "pointer",
+                  WebkitTapHighlightColor: "transparent",
+                }}>
+                  <span style={{ fontSize: 10, color: fg2 }}>{th.name}</span><br/>
+                  {pc.title}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {THINKERS.map(t => {
         const p = prog(t);
@@ -608,7 +636,7 @@ export default function App() {
                 transition: "background 0.15s, color 0.15s",
                 minHeight: 48, flexShrink: 0,
               }}>
-                {i + 1}. {p.format}{isRead(p.id) ? " ✓" : ""}
+                {i + 1}. {p.format}{isRead(p.id) ? " ✓" : ""}{isSaved(p.id) ? " ♥" : ""}
               </button>
             );
           })}
@@ -639,7 +667,7 @@ export default function App() {
 
             {/* YouTube embed */}
             {piece.type === "youtube" && piece.youtubeId && (
-              <div style={{ marginBottom: 28, border: `1.5px solid ${border}` }}>
+              <div style={{ marginBottom: 28, border: `1.5px solid ${border}`, transform: "translateZ(0)", WebkitTransform: "translateZ(0)", willChange: "transform" }}>
                 <div style={{ position: "relative", paddingBottom: "56.25%", height: 0 }}>
                   <iframe
                     src={`https://www.youtube.com/embed/${piece.youtubeId}`}
@@ -654,7 +682,7 @@ export default function App() {
             {/* Iframe embed */}
             {piece.type === "iframe" && !iframeErr[piece.id] && (
               <div style={{ marginBottom: 28 }}>
-                <div style={{ border: `1.5px solid ${border}`, height: 520, overflow: "hidden" }}>
+                <div style={{ border: `1.5px solid ${border}`, height: 520, overflow: "hidden", transform: "translateZ(0)", WebkitTransform: "translateZ(0)", willChange: "transform" }}>
                   <iframe
                     src={piece.iframeUrl}
                     style={{ width: "100%", height: "100%", border: "none" }}
@@ -715,6 +743,13 @@ export default function App() {
                   onClick={() => markRead(piece.id)}
                 >
                   {isRead(piece.id) ? "✓ READ" : "MARK READ"}
+                </button>
+                <button
+                  style={{ ...outlineBtn, fontSize: 16, padding: "11px 16px", lineHeight: 1 }}
+                  onClick={() => toggleSave(piece.id)}
+                  title={isSaved(piece.id) ? "Unsave" : "Save"}
+                >
+                  {isSaved(piece.id) ? "♥" : "♡"}
                 </button>
               </div>
               {next && <button style={outlineBtn} onClick={() => { setPiece(next); setNote(""); setExpandedNote(null); }}>NEXT →</button>}
