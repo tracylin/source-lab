@@ -278,9 +278,11 @@ export default function App() {
         position: "fixed", bottom: "calc(24px + env(safe-area-inset-bottom))",
         right: 24, zIndex: 200,
         display: "flex", flexDirection: "column-reverse", alignItems: "center", gap: 12,
+        pointerEvents: "none",
       }}>
         {/* Menu FAB — always at bottom */}
         <button onClick={() => setNavOpen(o => !o)} style={{
+          pointerEvents: "auto",
           width: fabSize, height: fabSize, borderRadius: "50%",
           background: navOpen ? fabBgActive : fabBg,
           color: navOpen ? bg : fg,
@@ -304,6 +306,7 @@ export default function App() {
         {/* Home — always visible above FAB when not on home */}
         {view !== "home" && (
           <button onClick={() => { setView("home"); setNavOpen(false); }} title="Home" style={{
+            pointerEvents: "auto",
             width: fabSmall, height: fabSmall, borderRadius: "50%",
             background: fabBg, color: fg, border: `1.5px solid ${border}`,
             display: "flex", alignItems: "center", justifyContent: "center",
@@ -322,6 +325,7 @@ export default function App() {
         {navOpen && (
           <>
             <button onClick={() => { setView("notebook"); setNavOpen(false); }} title="Notes" style={{
+              pointerEvents: "auto",
               width: fabSmall, height: fabSmall, borderRadius: "50%",
               background: view === "notebook" ? fabBgActive : fabBg,
               color: view === "notebook" ? bg : fg,
@@ -335,6 +339,7 @@ export default function App() {
               </svg>
             </button>
             <button onClick={() => { setView("position"); setNavOpen(false); }} title="Position" style={{
+              pointerEvents: "auto",
               width: fabSmall, height: fabSmall, borderRadius: "50%",
               background: view === "position" ? fabBgActive : fabBg,
               color: view === "position" ? bg : fg,
@@ -348,6 +353,7 @@ export default function App() {
               </svg>
             </button>
             <button onClick={() => { setDark(d => !d); setNavOpen(false); }} title={dark ? "Light mode" : "Dark mode"} style={{
+              pointerEvents: "auto",
               width: fabSmall, height: fabSmall, borderRadius: "50%",
               background: fabBg, color: fg, border: `1.5px solid ${border}`,
               display: "flex", alignItems: "center", justifyContent: "center",
@@ -661,7 +667,7 @@ export default function App() {
           </div>
 
           {/* Notes sidebar */}
-          <aside style={{ flex: "1 1 280px", minWidth: 240 }}>
+          <aside style={{ flex: "1 1 280px", minWidth: 240, paddingBottom: 80 }}>
             <div style={{ borderTop: `3px solid ${border}`, paddingTop: 18 }}>
               <div style={{ ...meta, fontSize: 11, marginBottom: 12 }}>NOTES</div>
               <textarea value={note} onChange={e => setNote(e.target.value)}
