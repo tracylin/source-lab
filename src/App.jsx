@@ -239,6 +239,37 @@ export default function App() {
   function savePos() { setS(p => ({ ...p, position: pos })); }
   function goRead(t) { setThinker(t); setPiece(t.pieces[0]); setNote(""); setIframeErr({}); setExpandedNote(null); setView("read"); }
 
+  async function exportAll() {
+    const lines = ["SUPPLY CHAIN AESTHETICS — READING LAB", "Exported " + fmtDate(new Date()), ""];
+    if (s.position?.trim()) {
+      lines.push("═══ MY POSITION ═══", "", s.position.trim(), "");
+    }
+    if (s.notes.length > 0) {
+      lines.push("═══ NOTES ═══", "");
+      const grouped = {};
+      THINKERS.forEach(t => { grouped[t.id] = { name: t.name, notes: [] }; });
+      [...s.notes].sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(n => {
+        if (grouped[n.tid]) grouped[n.tid].notes.push(n);
+      });
+      Object.values(grouped).forEach(g => {
+        if (g.notes.length === 0) return;
+        lines.push("── " + g.name + " ──", "");
+        g.notes.forEach(n => {
+          const title = n.pTitle || "";
+          lines.push((title ? title + " · " : "") + fmtDate(new Date(n.date)));
+          lines.push(n.text, "");
+        });
+      });
+    }
+    lines.push("─", s.readPieces.length + " pieces read · " + s.notes.length + " notes");
+    const text = lines.join("\n");
+    if (navigator.share) {
+      try { await navigator.share({ title: "SC Lab Export", text }); } catch(e) {}
+    } else {
+      try { await navigator.clipboard.writeText(text); alert("Copied to clipboard"); } catch(e) { prompt("Copy your export:", text); }
+    }
+  }
+
   // ── STYLE TOKENS (iPad-optimized: generous touch targets, readable type) ──
   const meta = { fontSize: 12, letterSpacing: "0.08em", color: fg2, lineHeight: 1.4 };
   const heading = { fontFamily: "'Space Grotesk', 'Helvetica Neue', sans-serif", fontWeight: 700, letterSpacing: "-0.02em", textTransform: "uppercase" };
@@ -349,6 +380,18 @@ export default function App() {
             }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+            </button>
+            <button onClick={() => { exportAll(); setNavOpen(false); }} title="Export" style={{
+              pointerEvents: "auto",
+              width: fabSmall, height: fabSmall, borderRadius: "50%",
+              background: fabBg, color: fg, border: `1.5px solid ${border}`,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              cursor: "pointer", boxShadow: fabShadow,
+              WebkitTapHighlightColor: "transparent",
+            }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
               </svg>
             </button>
             <button onClick={() => { setDark(d => !d); setNavOpen(false); }} title={dark ? "Light mode" : "Dark mode"} style={{
