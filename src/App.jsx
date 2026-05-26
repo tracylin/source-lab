@@ -278,7 +278,6 @@ export default function App() {
         position: "fixed", bottom: "calc(24px + env(safe-area-inset-bottom))",
         right: 24, zIndex: 200,
         display: "flex", flexDirection: "column-reverse", alignItems: "center", gap: 12,
-        pointerEvents: "none",
       }}>
         {/* Menu FAB — always at bottom */}
         <button onClick={() => setNavOpen(o => !o)} style={{
@@ -504,6 +503,8 @@ export default function App() {
           fontSize: 16, fontFamily: "'Source Serif 4', Georgia, serif", lineHeight: 1.8,
           resize: "vertical", outline: "none", boxSizing: "border-box",
           background: inputBg, color: fg, WebkitAppearance: "none",
+          WebkitUserSelect: "text", userSelect: "text",
+          touchAction: "manipulation",
         }}
       />
       <div style={{ marginTop: 18 }}>
@@ -667,7 +668,7 @@ export default function App() {
           </div>
 
           {/* Notes sidebar */}
-          <aside style={{ flex: "1 1 280px", minWidth: 240, paddingBottom: 80 }}>
+          <aside style={{ flex: "1 1 280px", minWidth: 240, paddingBottom: 80, position: "relative", zIndex: 1 }}>
             <div style={{ borderTop: `3px solid ${border}`, paddingTop: 18 }}>
               <div style={{ ...meta, fontSize: 11, marginBottom: 12 }}>NOTES</div>
               <textarea value={note} onChange={e => setNote(e.target.value)}
@@ -678,6 +679,8 @@ export default function App() {
                   lineHeight: 1.7, resize: "vertical", outline: "none",
                   boxSizing: "border-box", background: inputBg, color: fg,
                   marginBottom: 12, WebkitAppearance: "none",
+                  WebkitUserSelect: "text", userSelect: "text",
+                  touchAction: "manipulation",
                 }}
               />
               <button
